@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>우리 반 불편함 탐정단 - 학생 설문</title>
+  <meta name="description" content="초등 4학년 국어 제안하는 글쓰기 - 우리 반 불편함 탐정단 도입 설문">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="app-header">
+    <a href="./index.html" class="brand-title">
+      <span>🔍</span>
+      <span>우리 반 불편함 탐정단</span>
+    </a>
+    <div class="header-links">
+      <a href="./index.html" class="header-btn">🏠 홈</a>
+      <a href="./teacher.html" class="header-btn">📊 결과(TV)</a>
+      <a href="./write.html" class="header-btn">✍️ 제안하기</a>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <!-- 설문 작성 영역 -->
+    <div id="surveyFormArea">
+      <!-- 안내 상자 -->
+      <div class="card" style="border-left: 6px solid #2E7D5B; margin-bottom: 20px;">
+        <span class="step-indicator">활동 1 • 도입 설문</span>
+        <h1 style="font-size: 1.85rem; color: #2E7D5B; margin-top: 6px; margin-bottom: 8px;">
+          🔍 학교 곳곳의 불편함을 찾아라!
+        </h1>
+        <p style="font-size: 1.05rem; color: #4A5568;">
+          학교생활을 하면서 내가 직접 겪거나 본 불편한 점을 탐정처럼 찾아보아요.<br>
+          <strong style="color: #2E7D5B;">🔒 이름과 번호는 쓰지 않는 비밀 설문이에요! 솔직한 생각을 편안하게 적어 주세요.</strong>
+        </p>
+      </div>
+
+      <form id="surveyForm" onsubmit="return false;">
+        
+        <!-- 질문 1: 장소 -->
+        <section id="questionLocation" class="card">
+          <div class="card-header">
+            <span class="step-indicator" style="background:#EBF5F0; color:#2E7D5B; border-color:#92CEB3;">질문 1</span>
+            <h2 class="card-title">
+              <span>📍</span> 어디에서 불편함을 느꼈나요?
+              <span id="locRequiredBadge" class="required-badge" style="color:#E76F51; font-size:0.9rem; font-weight:700;">(한 곳 선택)</span>
+            </h2>
+            <p class="card-desc">불편한 일이 일어났던 학교 장소를 하나 골라 터치해 주세요.</p>
+          </div>
+
+          <div class="options-grid" id="locationGrid">
+            <button type="button" class="select-btn" data-value="우리 교실">
+              <span class="btn-emoji">🏫</span>
+              <span class="btn-label">우리 교실</span>
+            </button>
+            <button type="button" class="select-btn" data-value="복도·계단">
+              <span class="btn-emoji">🚶</span>
+              <span class="btn-label">복도·계단</span>
+            </button>
+            <button type="button" class="select-btn" data-value="운동장">
+              <span class="btn-emoji">⚽</span>
+              <span class="btn-label">운동장</span>
+            </button>
+            <button type="button" class="select-btn" data-value="급식실">
+              <span class="btn-emoji">🍱</span>
+              <span class="btn-label">급식실</span>
+            </button>
+            <button type="button" class="select-btn" data-value="화장실">
+              <span class="btn-emoji">🚻</span>
+              <span class="btn-label">화장실</span>
+            </button>
+            <button type="button" class="select-btn" data-value="도서관">
+              <span class="btn-emoji">📚</span>
+              <span class="btn-label">도서관</span>
+            </button>
+            <button type="button" class="select-btn" data-value="그 밖의 장소">
+              <span class="btn-emoji">🌳</span>
+              <span class="btn-label">그 밖의 장소</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- 질문 2: 문제 유형 -->
+        <section id="questionIssue" class="card">
+          <div class="card-header">
+            <span class="step-indicator" style="background:#FEF3C7; color:#92400E; border-color:#FCD34D;">질문 2</span>
+            <h2 class="card-title">
+              <span>⚠️</span> 어떤 점이 가장 불편했나요?
+              <span class="required-badge" style="color:#E76F51; font-size:0.9rem; font-weight:700;">(필수 선택)</span>
+            </h2>
+            <p class="card-desc">가장 알맞은 문제 유형을 하나 골라 터치해 주세요.</p>
+          </div>
+
+          <div class="options-grid large" id="issueGrid">
+            
+            <button type="button" class="select-btn" data-value="🔊소음">
+              <span class="btn-emoji">🔊</span>
+              <span class="btn-label">소음</span>
+              <span class="btn-sub">시끄러워서 공부나 대화가 힘들어요</span>
+            </button>
+
+            <button type="button" class="select-btn" data-value="⚠️안전">
+              <span class="btn-emoji">⚠️</span>
+              <span class="btn-label">안전</span>
+              <span class="btn-sub">다칠 위험이 있거나 부딪힐 것 같아요</span>
+            </button>
+
+            <button type="button" class="select-btn" data-value="📦정리">
+              <span class="btn-emoji">📦</span>
+              <span class="btn-label">정리</span>
+              <span class="btn-sub">물건이 제자리에 없거나 어질러져 있어요</span>
+            </button>
+
+            <button type="button" class="select-btn" data-value="🗑️청결">
+              <span class="btn-emoji">🗑️</span>
+              <span class="btn-label">청결</span>
+              <span class="btn-sub">쓰레기나 지저분한 곳이 있어요</span>
+            </button>
+
+            <button type="button" class="select-btn" data-value="🚶차례">
+              <span class="btn-emoji">🚶</span>
+              <span class="btn-label">차례</span>
+              <span class="btn-sub">줄을 서지 않거나 새치기를 해요</span>
+            </button>
+
+            <button type="button" class="select-btn" data-value="🤝놀이 참여">
+              <span class="btn-emoji">🤝</span>
+              <span class="btn-label">놀이 참여</span>
+              <span class="btn-sub">같이 놀지 못하거나 규칙을 안 지켜요</span>
+            </button>
+
+            <button type="button" class="select-btn" data-value="🧰공간·도구">
+              <span class="btn-emoji">🧰</span>
+              <span class="btn-label">공간·도구</span>
+              <span class="btn-sub">시설이나 도구가 고장 났거나 부족해요</span>
+            </button>
+
+            <button type="button" class="select-btn" data-value="💬말과 배려">
+              <span class="btn-emoji">💬</span>
+              <span class="btn-label">말과 배려</span>
+              <span class="btn-sub">거친 말이나 놀림으로 마음이 상해요</span>
+            </button>
+
+            <button type="button" class="select-btn" data-value="✏️기타">
+              <span class="btn-emoji">✏️</span>
+              <span class="btn-label">기타</span>
+              <span class="btn-sub">직접 어떤 문제인지 적을게요</span>
+            </button>
+
+            <button type="button" class="select-btn" data-value="😊불편한 점 없음" style="border-color:#86EFAC;">
+              <span class="btn-emoji">😊</span>
+              <span class="btn-label" style="color:#16A34A;">불편한 점 없음</span>
+              <span class="btn-sub">지금 우리 학교생활은 모두 좋아요!</span>
+            </button>
+
+          </div>
+        </section>
+
+        <!-- 질문 3: 구체적인 상황 -->
+        <section id="questionSituation" class="card">
+          <div class="card-header">
+            <span class="step-indicator" style="background:#EFF6FF; color:#1D4ED8; border-color:#BFDBFE;">질문 3</span>
+            <h2 class="card-title">
+              <span>✍️</span> 어떤 상황이었나요?
+              <span id="situationRequiredBadge" style="color:#718096; font-size:0.9rem; font-weight:600;">(선택)</span>
+            </h2>
+            <p id="situationHelpText" class="card-desc">
+              언제, 누구와, 어떤 일이 있었는지 짧고 구체적으로 적어 주세요.
+            </p>
+          </div>
+
+          <div class="form-group">
+            <textarea
+              id="situationInput"
+              class="text-textarea"
+              maxlength="100"
+              placeholder="예시: 쉬는 시간에 복도에서 빠르게 뛰어가다가 마주 오던 친구와 부딪힐 뻔했어요."
+            ></textarea>
+            <div class="char-counter">
+              <span id="charCount">0</span> / 100자
+            </div>
+          </div>
+        </section>
+
+        <!-- 제출 버튼 -->
+        <div style="margin-top: 10px; margin-bottom: 40px;">
+          <button type="button" id="submitBtn" class="btn-primary">
+            <span>🕵️ 탐정 임무 보고서 제출하기</span>
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- 제출 완료 화면 -->
+    <div id="completeScreen" class="card" style="display:none; text-align:center; padding: 48px 24px;">
+      <div style="font-size: 4rem; margin-bottom: 12px; animation: bounce 1s infinite alternate;">🎉</div>
+      <h2 style="font-size: 2rem; color: #2E7D5B; margin-bottom: 12px;">탐정 임무 완료!</h2>
+      <p style="font-size: 1.15rem; color: #4A5568; max-width: 500px; margin: 0 auto 24px;">
+        여러분이 찾은 소중한 의견이 선생님 TV 화면으로 실시간 전송되었습니다.<br>
+        친구들의 생각이 모여 더 좋은 학교를 만들 거예요!
+      </p>
+
+      <div style="display:flex; justify-content:center; gap: 14px; flex-wrap:wrap;">
+        <button type="button" id="resetBtn" class="btn-secondary">
+          <span>🔄 다른 불편함도 한 번 더 쓰기</span>
+        </button>
+        <a href="./write.html" class="btn-primary" style="width:auto; padding: 14px 28px; text-decoration:none;">
+          <span>활동 3: 제안하는 글쓰기로 가기 →</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- 토스트 알림 컨테이너 -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script type="module">
+    import { addResponse, validateCleanContent } from './app.js';
+
+    let selectedLocation = '';
+    let selectedIssue = '';
+
+    const locationGrid = document.getElementById('locationGrid');
+    const issueGrid = document.getElementById('issueGrid');
+    const questionLocation = document.getElementById('questionLocation');
+    const questionIssue = document.getElementById('questionIssue');
+    const questionSituation = document.getElementById('questionSituation');
+    const locRequiredBadge = document.getElementById('locRequiredBadge');
+    const situationRequiredBadge = document.getElementById('situationRequiredBadge');
+    const situationHelpText = document.getElementById('situationHelpText');
+    const situationInput = document.getElementById('situationInput');
+    const charCount = document.getElementById('charCount');
+    const submitBtn = document.getElementById('submitBtn');
+    const surveyFormArea = document.getElementById('surveyFormArea');
+    const completeScreen = document.getElementById('completeScreen');
+    const resetBtn = document.getElementById('resetBtn');
+
+    // 토스트 팝업 띄우기 함수
+    function showToast(message, isWarning = true) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      if (isWarning) {
+        toast.style.background = '#852D19';
+      }
+      toast.innerHTML = `<span>${isWarning ? '⚠️' : '✅'}</span><span>${message}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    // 질문1 (장소) 버튼 클릭 처리
+    locationGrid.addEventListener('click', (e) => {
+      const btn = e.target.closest('.select-btn');
+      if (!btn) return;
+      locationGrid.querySelectorAll('.select-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedLocation = btn.getAttribute('data-value');
+    });
+
+    // 질문2 (문제 유형) 버튼 클릭 처리 및 조건부 규칙 적용
+    issueGrid.addEventListener('click', (e) => {
+      const btn = e.target.closest('.select-btn');
+      if (!btn) return;
+      issueGrid.querySelectorAll('.select-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedIssue = btn.getAttribute('data-value');
+
+      applyIssueRules(selectedIssue);
+    });
+
+    function applyIssueRules(issue) {
+      if (issue === '😊불편한 점 없음') {
+        // 질문 1은 흐리게 + 선택 해제/필수 해제
+        questionLocation.style.opacity = '0.45';
+        questionLocation.style.pointerEvents = 'none';
+        locRequiredBadge.textContent = '(선택 안 해도 돼요)';
+        locRequiredBadge.style.color = '#718096';
+        
+        // 질문 3은 숨김
+        questionSituation.style.display = 'none';
+        situationInput.value = '';
+        charCount.textContent = '0';
+      } else if (issue === '✏️기타') {
+        // 원래대로 되돌림
+        questionLocation.style.opacity = '1';
+        questionLocation.style.pointerEvents = 'auto';
+        locRequiredBadge.textContent = '(한 곳 선택)';
+        locRequiredBadge.style.color = '#E76F51';
+
+        // 질문 3 표시 및 필수로 변경
+        questionSituation.style.display = 'block';
+        situationRequiredBadge.textContent = '(꼭 써 주세요!)';
+        situationRequiredBadge.style.color = '#E76F51';
+        situationRequiredBadge.style.fontWeight = '700';
+        situationHelpText.innerHTML = '<strong style="color:#E76F51;">어떤 점이 불편했는지 자세히 적어 주어야 친구들과 선생님이 알 수 있어요.</strong>';
+      } else {
+        // 일반 문제 유형
+        questionLocation.style.opacity = '1';
+        questionLocation.style.pointerEvents = 'auto';
+        locRequiredBadge.textContent = '(한 곳 선택)';
+        locRequiredBadge.style.color = '#E76F51';
+
+        questionSituation.style.display = 'block';
+        situationRequiredBadge.textContent = '(선택)';
+        situationRequiredBadge.style.color = '#718096';
+        situationRequiredBadge.style.fontWeight = '600';
+        situationHelpText.textContent = '언제, 누구와, 어떤 일이 있었는지 짧고 구체적으로 적어 주세요.';
+      }
+    }
+
+    // 글자 수 실시간 카운트
+    situationInput.addEventListener('input', () => {
+      charCount.textContent = situationInput.value.length;
+    });
+
+    // 제출 버튼 핸들러
+    submitBtn.addEventListener('click', async () => {
+      // 1. 문제 유형 미선택 검사
+      if (!selectedIssue) {
+        showToast('어떤 점이 불편했는지 질문 2를 먼저 선택해 주세요!');
+        questionIssue.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      // 2. '불편한 점 없음'인 경우
+      if (selectedIssue === '😊불편한 점 없음') {
+        await doSubmit({
+          location: '학교 전체',
+          issue: '😊불편한 점 없음',
+          situation: ''
+        });
+        return;
+      }
+
+      // 3. 장소 미선택 검사
+      if (!selectedLocation) {
+        showToast('어디에서 불편함을 느꼈는지 질문 1의 장소를 골라 주세요!');
+        questionLocation.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      // 4. '기타'인 경우 내용 필수 검사
+      const situationText = situationInput.value.trim();
+      if (selectedIssue === '✏️기타' && !situationText) {
+        showToast('기타를 선택하셨어요. 질문 3에 어떤 불편함인지 꼭 적어 주세요!');
+        questionSituation.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        situationInput.focus();
+        return;
+      }
+
+      // 5. 비속어 검증
+      if (situationText) {
+        const check = validateCleanContent(situationText, '상황 설명');
+        if (!check.valid) {
+          showToast(check.message);
+          situationInput.focus();
+          return;
+        }
+      }
+
+      // 정상 제출
+      await doSubmit({
+        location: selectedLocation,
+        issue: selectedIssue,
+        situation: situationText
+      });
+    });
+
+    async function doSubmit(data) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>⏳ 선생님께 전송하는 중...</span>';
+
+      try {
+        await addResponse(data);
+        surveyFormArea.style.display = 'none';
+        completeScreen.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (err) {
+        showToast(err.message || '전송 중 오류가 발생했습니다. 다시 시도해 주세요.');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>🕵️ 탐정 임무 보고서 제출하기</span>';
+      }
+    }
+
+    // 한 번 더 쓰기 리셋
+    resetBtn.addEventListener('click', () => {
+      selectedLocation = '';
+      selectedIssue = '';
+      locationGrid.querySelectorAll('.select-btn').forEach(b => b.classList.remove('selected'));
+      issueGrid.querySelectorAll('.select-btn').forEach(b => b.classList.remove('selected'));
+      situationInput.value = '';
+      charCount.textContent = '0';
+      applyIssueRules('');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<span>🕵️ 탐정 임무 보고서 제출하기</span>';
+      completeScreen.style.display = 'none';
+      surveyFormArea.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

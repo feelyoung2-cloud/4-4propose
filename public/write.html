@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>제안하는 글쓰기 - 4학년 국어 활동3</title>
+  <meta name="description" content="초등 4학년 국어 제안하는 글쓰기 - 문제 상황 발견, 제안서 작성, 편지 미리보기, 소리 내어 읽기">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="app-header">
+    <a href="./index.html" class="brand-title">
+      <span>✍️</span>
+      <span>제안하는 글쓰기</span>
+      <span class="brand-badge" style="background:#EFF6FF; color:#1D4ED8;">활동 3</span>
+    </a>
+    <div class="header-links">
+      <a href="./index.html" class="header-btn">🏠 홈</a>
+      <a href="./teacher.html" class="header-btn">📊 설문결과(TV)</a>
+      <a href="./board.html" class="header-btn">❤️ 공감게시판</a>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <!-- 기본 정보 (모둠 & 이름) -->
+    <div class="card" style="border-left: 6px solid #3B82F6;">
+      <span class="step-indicator" style="background:#EFF6FF; color:#1D4ED8; border-color:#BFDBFE;">기본 정보</span>
+      <h1 style="font-size: 1.8rem; color: #1D4ED8; margin-top: 4px; margin-bottom: 8px;">
+        우리의 생각으로 더 좋은 학교를 만들어요!
+      </h1>
+      <p style="color: #4A5568; font-size: 1rem; margin-bottom: 16px;">
+        설문 결과를 바탕으로 해결하고 싶은 문제를 고르고, 설득력 있는 제안서를 완성해 보아요.
+      </p>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+        <div>
+          <label class="form-label">우리의 모둠 <span class="required-badge">*</span></label>
+          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 8px;" id="teamBtnGroup">
+            <button type="button" class="select-btn team-btn selected" data-team="1모둠" style="min-height:50px; padding:10px;">1모둠</button>
+            <button type="button" class="select-btn team-btn" data-team="2모둠" style="min-height:50px; padding:10px;">2모둠</button>
+            <button type="button" class="select-btn team-btn" data-team="3모둠" style="min-height:50px; padding:10px;">3모둠</button>
+            <button type="button" class="select-btn team-btn" data-team="4모둠" style="min-height:50px; padding:10px;">4모둠</button>
+            <button type="button" class="select-btn team-btn" data-team="5모둠" style="min-height:50px; padding:10px;">5모둠</button>
+            <button type="button" class="select-btn team-btn" data-team="6모둠" style="min-height:50px; padding:10px;">6모둠</button>
+          </div>
+        </div>
+
+        <div>
+          <label class="form-label" for="authorName">제안하는 사람(이름) <span class="required-badge">*</span></label>
+          <input type="text" id="authorName" class="text-input" placeholder="예: 김민준, 이서아 (모둠원 이름)" maxlength="40">
+          <div class="helper-text">모둠원 이름을 쉼표로 함께 적어도 좋아요!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1단계: 문제 발견하기 -->
+    <div class="card" id="step1Card">
+      <div class="card-header">
+        <span class="step-indicator" style="background:#EBF5F0; color:#2E7D5B; border-color:#92CEB3;">1단계</span>
+        <h2 class="card-title"><span>🔍</span> 우리 반 설문에서 문제 상황 고르기</h2>
+        <p class="card-desc">
+          친구들이 많이 지목한 불편함을 카드로 골라보세요. 카드를 누르면 문제 상황이 자동으로 입력됩니다!
+        </p>
+      </div>
+
+      <!-- 설문 집계 상위 카드들 -->
+      <div id="surveyProblemCards" class="options-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 16px;">
+        <div style="grid-column: 1 / -1; text-align:center; padding: 20px; color:#A0AEC0;">
+          설문 응답을 불러오는 중...
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <button type="button" id="customProblemBtn" class="btn-secondary" style="font-size:0.95rem; padding:10px 18px;">
+          <span>✏️ 내가 겪은 다른 문제 직접 쓰기</span>
+        </button>
+        <span id="selectedProblemBadge" style="font-size:0.95rem; color:#2E7D5B; font-weight:700;"></span>
+      </div>
+
+      <!-- 친구들이 겪은 실제 상황 이야기 참고 상자 -->
+      <div id="storyReferenceBox" style="margin-top: 18px; display:none; background:#F8FAFC; border: 2px dashed #CBD5E0; border-radius:12px; padding:16px;">
+        <div style="font-size: 0.95rem; font-weight: 700; color: #4A5568; margin-bottom: 8px;">
+          💬 우리 반 친구들이 겪은 실제 상황 참고하기:
+        </div>
+        <div id="storyReferenceList" style="display:flex; flex-direction:column; gap:8px;"></div>
+      </div>
+    </div>
+
+    <!-- 2단계: 제안하는 글 작성하기 -->
+    <div class="card" id="step2Card">
+      <div class="card-header">
+        <span class="step-indicator" style="background:#FEF3C7; color:#92400E; border-color:#FCD34D;">2단계</span>
+        <h2 class="card-title"><span>📝</span> 제안하는 글 작성하기</h2>
+        <p class="card-desc">받는 사람을 정하고, 제안하는 내용과 알맞은 까닭을 차례대로 써 보세요.</p>
+      </div>
+
+      <!-- 받는 사람 선택 -->
+      <div class="form-group">
+        <label class="form-label">받는 사람 <span class="required-badge">*</span></label>
+        <div class="options-grid" id="recipientGrid" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
+          <button type="button" class="select-btn recipient-btn selected" data-value="전교 학생들에게">
+            <span class="btn-emoji">🏫</span>
+            <span class="btn-label">전교 학생들에게</span>
+          </button>
+          <button type="button" class="select-btn recipient-btn" data-value="담임 선생님께">
+            <span class="btn-emoji">👩‍🏫</span>
+            <span class="btn-label">담임 선생님께</span>
+          </button>
+          <button type="button" class="select-btn recipient-btn" data-value="교장 선생님께">
+            <span class="btn-emoji">🏢</span>
+            <span class="btn-label">교장 선생님께</span>
+          </button>
+          <button type="button" class="select-btn recipient-btn" data-value="시설 담당 선생님께">
+            <span class="btn-emoji">🛠️</span>
+            <span class="btn-label">시설 담당 선생님께</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 문제 상황 -->
+      <div class="form-group">
+        <label class="form-label" for="problemInput">
+          ① 문제 상황 <span class="required-badge">*</span>
+        </label>
+        <div class="helper-text">도움 문장: "(장소)에서 (어떤 일)을 하여 불편하거나 위험한 일이 일어납니다."</div>
+        <textarea id="problemInput" class="text-textarea" placeholder="예: 쉬는 시간과 점심시간에 복도와 계단에서 빠르게 뛰는 친구들이 많아 마주 오는 친구들과 부딪힐 뻔한 일이 자주 일어납니다." maxlength="150"></textarea>
+      </div>
+
+      <!-- 제안 내용 -->
+      <div class="form-group">
+        <label class="form-label" for="proposalInput">
+          ② 제안하는 내용 <span class="required-badge">*</span>
+        </label>
+        <div class="helper-text">도움 문장: "(어떤 실천 방법)을 하자고 제안합니다." 또는 "우리 모두 ( )합시다."</div>
+        <textarea id="proposalInput" class="text-textarea" placeholder="예: 복도와 계단에서는 '사뿐사뿐 우측통행'을 실천하고, 바닥에 재미있는 발자국 스티커를 붙여 천천히 걷자고 제안합니다." maxlength="200"></textarea>
+      </div>
+
+      <!-- 까닭 1 -->
+      <div class="form-group">
+        <label class="form-label" for="reason1Input">
+          ③ 제안하는 까닭 1 <span class="required-badge">* (필수)</span>
+        </label>
+        <div class="helper-text">도움 문장: "왜냐하면 ( )하기 때문입니다."</div>
+        <textarea id="reason1Input" class="text-textarea" placeholder="예: 왜냐하면 우측통행을 지키며 걸으면 친구들과 부딪히지 않아 모두가 안전하고 다치지 않는 학교를 만들 수 있기 때문입니다." maxlength="200"></textarea>
+      </div>
+
+      <!-- 까닭 2 -->
+      <div class="form-group">
+        <label class="form-label" for="reason2Input">
+          ④ 제안하는 까닭 2 <span style="color:#718096; font-size:0.85rem;">(선택 - 까닭을 하나 더 쓰면 더욱 설득력이 높아져요!)</span>
+        </label>
+        <div class="helper-text">도움 문장: "또한 ( )할 수 있기 때문입니다."</div>
+        <textarea id="reason2Input" class="text-textarea" placeholder="예: 또한 복도가 조용해져서 교실에서 휴식을 취하거나 공부하는 친구들에게 방해가 되지 않기 때문입니다." maxlength="200"></textarea>
+      </div>
+    </div>
+
+    <!-- 3단계: 편지지 형식 실시간 미리보기 & TTS -->
+    <div class="card" id="step3Card" style="background:#FDFBF7; border: 2px solid #E6DFD3;">
+      <div class="card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <div>
+          <span class="step-indicator" style="background:#FEF3C7; color:#92400E; border-color:#FCD34D;">3단계</span>
+          <h2 class="card-title"><span>💌</span> 편지 형식 실시간 미리보기</h2>
+          <p class="card-desc">입력한 내용이 실제 제안서 편지로 정갈하게 완성됩니다.</p>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button type="button" id="ttsPlayBtn" class="btn-secondary" style="padding:8px 16px; font-size:0.95rem; font-weight:700; background:#FFFFFF; color:#2E7D5B; border-color:#2E7D5B;">
+            <span>🔊 소리 내어 읽기</span>
+          </button>
+          <button type="button" id="ttsStopBtn" class="btn-secondary" style="padding:8px 14px; font-size:0.95rem; display:none;">
+            <span>⏹️ 멈춤</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 편지지 컴포넌트 -->
+      <div class="letter-paper serif-font" id="letterPaper">
+        <div class="letter-recipient" id="previewRecipient">전교 학생들에게</div>
+        
+        <div class="letter-body">
+          안녕하세요? 저는 <strong id="previewTeamName" style="color:#2E7D5B;">1모둠</strong>의 <strong id="previewAuthorName" style="color:#2E7D5B;">친구</strong>입니다.<br><br>
+          우리 학교생활을 살펴보면, <span id="previewProblem" style="color:#2D3748;">[문제 상황을 위 칸에 입력하면 여기에 채워집니다.]</span><br><br>
+          이에 저는 <span id="previewProposal" style="font-weight:700; color:#1D4ED8; text-decoration: underline; text-underline-offset: 4px;">[제안하는 내용을 입력해 주세요.]</span>을(를) 제안합니다.<br><br>
+          이러한 제안을 하는 까닭은 다음과 같습니다.<br>
+          첫째, <span id="previewReason1">[첫 번째 까닭을 입력해 주세요.]</span><br>
+          <span id="previewReason2Wrap" style="display:none;">둘째, <span id="previewReason2"></span><br></span><br>
+          우리의 작은 실천과 배려가 모이면 더욱 따뜻하고 즐거운 학교가 될 것입니다. 함께 힘을 모아 주시기를 바랍니다. 감사합니다.
+        </div>
+
+        <div class="letter-footer">
+          <span id="previewDate">202X년 X월 X일</span><br>
+          <span id="previewTeamSign">1모둠</span> 올림
+        </div>
+      </div>
+    </div>
+
+    <!-- 4단계: 스스로 점검하기 & 제출 -->
+    <div class="card" id="step4Card">
+      <div class="card-header">
+        <span class="step-indicator" style="background:#FEE2E2; color:#B91C1C; border-color:#FECACA;">4단계</span>
+        <h2 class="card-title"><span>✅</span> 스스로 점검하고 제출하기</h2>
+        <p class="card-desc">좋은 제안서가 되기 위한 3가지 기준을 확인하고 모두 체크해 보세요.</p>
+      </div>
+
+      <div style="margin-bottom: 24px;">
+        <label class="checklist-item" id="checkLabel1">
+          <input type="checkbox" id="check1">
+          <span>1. 학교에서 일어난 문제 상황이 구체적이고 분명하게 드러났나요?</span>
+        </label>
+        <label class="checklist-item" id="checkLabel2">
+          <input type="checkbox" id="check2">
+          <span>2. 우리가 스스로 실천할 수 있고 현실적인 제안인가요?</span>
+        </label>
+        <label class="checklist-item" id="checkLabel3">
+          <input type="checkbox" id="check3">
+          <span>3. 제안한 내용을 뒷받침하는 알맞고 설득력 있는 까닭을 들었나요?</span>
+        </label>
+      </div>
+
+      <button type="button" id="submitProposalBtn" class="btn-primary" disabled>
+        <span>🚀 3가지 점검을 모두 완료하면 제출할 수 있어요</span>
+      </button>
+    </div>
+
+  </main>
+
+  <!-- 제출 완료 모달 -->
+  <div id="proposalSuccessModal" class="fullscreen-modal">
+    <div class="modal-content-box" style="text-align:center; padding: 48px 30px;">
+      <div style="font-size: 4rem; margin-bottom: 12px; animation: bounce 1s infinite alternate;">🎉</div>
+      <h2 style="font-size: 2.2rem; color: #2E7D5B; margin-bottom: 12px;">제안서가 멋지게 완성되었습니다!</h2>
+      <p style="font-size: 1.2rem; color: #4A5568; max-width: 600px; margin: 0 auto 24px;">
+        우리 모둠의 소중한 제안이 학급 공감 게시판에 등록되었습니다.<br>
+        친구들의 제안서를 읽고 따뜻한 공감 하트(❤️)와 격려 댓글을 남겨보세요!
+      </p>
+
+      <div style="display:flex; justify-content:center; gap: 14px; flex-wrap:wrap;">
+        <a href="./board.html" class="btn-primary" style="width:auto; padding: 14px 32px; font-size:1.15rem; text-decoration:none;">
+          <span>❤️ 공감 게시판으로 바로 가기 →</span>
+        </a>
+        <button type="button" id="writeAgainBtn" class="btn-secondary">
+          새 제안서 또 쓰기
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 토스트 컨테이너 -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script type="module">
+    import { subscribeResponses, addProposal, speakText, stopSpeaking } from './app.js';
+
+    let currentTeam = '1모둠';
+    let currentRecipient = '전교 학생들에게';
+    let rawResponses = [];
+
+    // DOM Elements
+    const teamBtnGroup = document.getElementById('teamBtnGroup');
+    const authorNameInput = document.getElementById('authorName');
+    const recipientGrid = document.getElementById('recipientGrid');
+    const problemInput = document.getElementById('problemInput');
+    const proposalInput = document.getElementById('proposalInput');
+    const reason1Input = document.getElementById('reason1Input');
+    const reason2Input = document.getElementById('reason2Input');
+    const surveyProblemCards = document.getElementById('surveyProblemCards');
+    const customProblemBtn = document.getElementById('customProblemBtn');
+    const selectedProblemBadge = document.getElementById('selectedProblemBadge');
+    const storyReferenceBox = document.getElementById('storyReferenceBox');
+    const storyReferenceList = document.getElementById('storyReferenceList');
+
+    // 미리보기 DOM
+    const previewRecipient = document.getElementById('previewRecipient');
+    const previewTeamName = document.getElementById('previewTeamName');
+    const previewAuthorName = document.getElementById('previewAuthorName');
+    const previewProblem = document.getElementById('previewProblem');
+    const previewProposal = document.getElementById('previewProposal');
+    const previewReason1 = document.getElementById('previewReason1');
+    const previewReason2 = document.getElementById('previewReason2');
+    const previewReason2Wrap = document.getElementById('previewReason2Wrap');
+    const previewDate = document.getElementById('previewDate');
+    const previewTeamSign = document.getElementById('previewTeamSign');
+
+    // 점검 체크박스
+    const check1 = document.getElementById('check1');
+    const check2 = document.getElementById('check2');
+    const check3 = document.getElementById('check3');
+    const checkLabel1 = document.getElementById('checkLabel1');
+    const checkLabel2 = document.getElementById('checkLabel2');
+    const checkLabel3 = document.getElementById('checkLabel3');
+    const submitProposalBtn = document.getElementById('submitProposalBtn');
+
+    // 모달 & TTS
+    const proposalSuccessModal = document.getElementById('proposalSuccessModal');
+    const writeAgainBtn = document.getElementById('writeAgainBtn');
+    const ttsPlayBtn = document.getElementById('ttsPlayBtn');
+    const ttsStopBtn = document.getElementById('ttsStopBtn');
+
+    // 오늘 날짜 설정
+    const today = new Date();
+    previewDate.textContent = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
+
+    function showToast(msg) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `<span>⚠️</span><span>${msg}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    // 모둠 선택
+    teamBtnGroup.addEventListener('click', (e) => {
+      const btn = e.target.closest('.team-btn');
+      if (!btn) return;
+      teamBtnGroup.querySelectorAll('.team-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      currentTeam = btn.getAttribute('data-team');
+      updatePreview();
+    });
+
+    // 받는 사람 선택
+    recipientGrid.addEventListener('click', (e) => {
+      const btn = e.target.closest('.recipient-btn');
+      if (!btn) return;
+      recipientGrid.querySelectorAll('.recipient-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      currentRecipient = btn.getAttribute('data-value');
+      updatePreview();
+    });
+
+    // 실시간 설문 데이터 구독 후 카드 생성
+    subscribeResponses((items) => {
+      rawResponses = items;
+      renderSurveyProblemCards(items);
+    });
+
+    function renderSurveyProblemCards(items) {
+      const valid = items.filter(r => r.issue !== '😊불편한 점 없음');
+      if (valid.length === 0) {
+        surveyProblemCards.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align:center; padding: 20px; color:#718096; background:#F8FAFC; border-radius:12px;">
+            아직 설문 응답이 없습니다. 아래의 <strong>[내가 겪은 다른 문제 직접 쓰기]</strong>를 눌러 시작해 보세요!
+          </div>
+        `;
+        return;
+      }
+
+      // 장소 x 문제 유형 그룹화
+      const groupMap = {};
+      valid.forEach(r => {
+        const key = `${r.location}__${r.issue}`;
+        if (!groupMap[key]) {
+          groupMap[key] = { location: r.location, issue: r.issue, count: 0, situations: [] };
+        }
+        groupMap[key].count++;
+        if (r.situation && r.situation.trim()) {
+          groupMap[key].situations.push(r.situation.trim());
+        }
+      });
+
+      // 많은 순 정렬 후 상위 8개
+      const sorted = Object.values(groupMap).sort((a, b) => b.count - a.count).slice(0, 8);
+
+      surveyProblemCards.innerHTML = '';
+      sorted.forEach(group => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'select-btn';
+        card.style.textAlign = 'left';
+        card.style.alignItems = 'flex-start';
+        card.style.padding = '14px 16px';
+        card.innerHTML = `
+          <div style="display:flex; justify-content:space-between; width:100%; align-items:center; margin-bottom:4px;">
+            <span style="font-size:0.85rem; font-weight:700; color:#2E7D5B;">📍 ${group.location}</span>
+            <span style="background:#DEF7EC; color:#03543F; font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:10px;">${group.count}명이 응답</span>
+          </div>
+          <div style="font-size:1.15rem; font-weight:700; color:#1F2937; margin-bottom:4px;">${group.issue}</div>
+          <div style="font-size:0.8rem; color:#718096;">터치하여 이 문제를 제안 주제로 선택하기</div>
+        `;
+
+        card.addEventListener('click', () => {
+          surveyProblemCards.querySelectorAll('.select-btn').forEach(b => b.classList.remove('selected'));
+          card.classList.add('selected');
+
+          // 문제 상황 자동 완성
+          const cleanIssue = group.issue.replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]|\uD83D[\uDE80-\uDEFF]/g, '').trim();
+          problemInput.value = `${group.location}에서 ${cleanIssue} 문제가 발생하여 학생들이 학교생활에서 큰 불편을 겪고 있습니다.`;
+          selectedProblemBadge.textContent = `선택한 주제: ${group.location} (${group.issue})`;
+
+          // 상황 이야기 최대 2개 표시
+          if (group.situations.length > 0) {
+            storyReferenceBox.style.display = 'block';
+            storyReferenceList.innerHTML = group.situations.slice(0, 2).map(s => `
+              <div style="background:#FFFFFF; border:1px solid #E2E8F0; border-radius:8px; padding:10px 14px; font-size:0.95rem; color:#334155;">
+                • "${s}"
+              </div>
+            `).join('');
+          } else {
+            storyReferenceBox.style.display = 'none';
+          }
+
+          updatePreview();
+        });
+
+        surveyProblemCards.appendChild(card);
+      });
+    }
+
+    customProblemBtn.addEventListener('click', () => {
+      surveyProblemCards.querySelectorAll('.select-btn').forEach(b => b.classList.remove('selected'));
+      selectedProblemBadge.textContent = '직접 입력 모드';
+      storyReferenceBox.style.display = 'none';
+      problemInput.value = '';
+      problemInput.placeholder = '예: 우리 교실에서 친구들이...';
+      problemInput.focus();
+      updatePreview();
+    });
+
+    // 실시간 미리보기 업데이트
+    function updatePreview() {
+      previewRecipient.textContent = currentRecipient;
+      previewTeamName.textContent = currentTeam;
+      previewTeamSign.textContent = currentTeam;
+      previewAuthorName.textContent = authorNameInput.value.trim() || '친구들';
+
+      previewProblem.textContent = problemInput.value.trim() || '[문제 상황을 위 칸에 입력하면 여기에 채워집니다.]';
+      previewProposal.textContent = proposalInput.value.trim() || '[제안하는 내용을 입력해 주세요.]';
+      previewReason1.textContent = reason1Input.value.trim() || '[첫 번째 까닭을 입력해 주세요.]';
+
+      const r2 = reason2Input.value.trim();
+      if (r2) {
+        previewReason2Wrap.style.display = 'inline';
+        previewReason2.textContent = r2;
+      } else {
+        previewReason2Wrap.style.display = 'none';
+      }
+    }
+
+    [authorNameInput, problemInput, proposalInput, reason1Input, reason2Input].forEach(el => {
+      el.addEventListener('input', updatePreview);
+    });
+
+    // 점검 체크박스 핸들러
+    function updateChecklist() {
+      checkLabel1.classList.toggle('checked', check1.checked);
+      checkLabel2.classList.toggle('checked', check2.checked);
+      checkLabel3.classList.toggle('checked', check3.checked);
+
+      const allChecked = check1.checked && check2.checked && check3.checked;
+      submitProposalBtn.disabled = !allChecked;
+
+      if (allChecked) {
+        submitProposalBtn.innerHTML = '<span>🚀 멋진 제안서 학급에 제출하기!</span>';
+      } else {
+        submitProposalBtn.innerHTML = '<span>🚀 3가지 점검을 모두 완료하면 제출할 수 있어요</span>';
+      }
+    }
+
+    [check1, check2, check3].forEach(chk => chk.addEventListener('change', updateChecklist));
+
+    // Web Speech API (TTS)
+    if (!('speechSynthesis' in window)) {
+      ttsPlayBtn.style.display = 'none';
+      ttsStopBtn.style.display = 'none';
+    } else {
+      ttsPlayBtn.addEventListener('click', () => {
+        const textToRead = `${previewRecipient.textContent}. 안녕하세요? 저는 ${currentTeam}의 ${authorNameInput.value.trim() || '친구'}입니다. 우리 학교생활을 살펴보면, ${problemInput.value.trim() || '문제가 있습니다.'} 이에 저는 ${proposalInput.value.trim() || '방법을 제안합니다.'} 이러한 제안을 하는 까닭은 다음과 같습니다. 첫째, ${reason1Input.value.trim() || '첫째 까닭입니다.'} ${reason2Input.value.trim() ? '둘째, ' + reason2Input.value.trim() : ''} 우리의 작은 실천으로 더 좋은 학교를 만들어요. 감사합니다.`;
+        
+        speakText(textToRead);
+        ttsPlayBtn.style.display = 'none';
+        ttsStopBtn.style.display = 'inline-flex';
+      });
+
+      ttsStopBtn.addEventListener('click', () => {
+        stopSpeaking();
+        ttsPlayBtn.style.display = 'inline-flex';
+        ttsStopBtn.style.display = 'none';
+      });
+    }
+
+    // 최종 제출
+    submitProposalBtn.addEventListener('click', async () => {
+      const name = authorNameInput.value.trim();
+      const problem = problemInput.value.trim();
+      const proposal = proposalInput.value.trim();
+      const reason1 = reason1Input.value.trim();
+      const reason2 = reason2Input.value.trim();
+
+      if (!name) {
+        showToast('제안하는 사람(모둠원 이름)을 입력해 주세요.');
+        authorNameInput.focus();
+        return;
+      }
+      if (!problem) {
+        showToast('문제 상황을 입력해 주세요.');
+        problemInput.focus();
+        return;
+      }
+      if (!proposal) {
+        showToast('제안하는 내용을 구체적으로 입력해 주세요.');
+        proposalInput.focus();
+        return;
+      }
+      if (!reason1) {
+        showToast('제안하는 까닭 1을 반드시 입력해 주세요.');
+        reason1Input.focus();
+        return;
+      }
+
+      submitProposalBtn.disabled = true;
+      submitProposalBtn.innerHTML = '<span>⏳ 제안서를 게시판에 등록하는 중...</span>';
+
+      try {
+        await addProposal({
+          team: currentTeam,
+          name,
+          recipient: currentRecipient,
+          problem,
+          proposal,
+          reason1,
+          reason2,
+          fullText: document.getElementById('letterPaper').innerText
+        });
+
+        stopSpeaking();
+        proposalSuccessModal.classList.add('active');
+      } catch (err) {
+        showToast(err.message || '제출 중 오류가 발생했습니다.');
+        submitProposalBtn.disabled = false;
+        updateChecklist();
+      }
+    });
+
+    writeAgainBtn.addEventListener('click', () => {
+      proposalSuccessModal.classList.remove('active');
+      problemInput.value = '';
+      proposalInput.value = '';
+      reason1Input.value = '';
+      reason2Input.value = '';
+      check1.checked = false;
+      check2.checked = false;
+      check3.checked = false;
+      updateChecklist();
+      updatePreview();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

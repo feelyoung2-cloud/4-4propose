@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>공감 나누기 게시판 - 4학년 국어 활동4</title>
+  <meta name="description" content="초등 4학년 국어 제안하는 글쓰기 - 친구들의 제안서를 읽고 공감 하트와 따뜻한 댓글을 남기는 게시판">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <a href="./index.html" class="brand-title">
+        <span>❤️</span>
+        <span>공감 나누기 게시판</span>
+      </a>
+      <span id="roleBadge" class="brand-badge" style="background:#FEE2E2; color:#B91C1C;">학생 활동 모드</span>
+    </div>
+    <div class="header-links">
+      <a href="./index.html" class="header-btn">🏠 홈</a>
+      <a href="./write.html" class="header-btn">✍️ 제안하기</a>
+      <a href="./teacher.html" class="header-btn">📊 설문결과(TV)</a>
+      <button type="button" id="toggleRoleBtn" class="header-btn" style="background:#F3E8FF; color:#6B21A8; border-color:#D8B4FE;">
+        📺 교사용 TV 모드
+      </button>
+    </div>
+  </header>
+
+  <main class="main-container wide">
+    <!-- 학생용 상단 모둠 설정 바 -->
+    <div id="studentHeaderBar" class="card" style="padding: 16px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; border-left: 5px solid #E76F51;">
+      <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+        <span style="font-weight:700; color:#2D3748; font-size:1rem;">내 모둠 선택:</span>
+        <div id="myTeamButtonGroup" style="display:flex; gap:6px; flex-wrap:wrap;">
+          <button type="button" class="select-btn team-select-btn selected" data-team="1모둠" style="min-height:38px; padding:6px 14px; font-size:0.9rem;">1모둠</button>
+          <button type="button" class="select-btn team-select-btn" data-team="2모둠" style="min-height:38px; padding:6px 14px; font-size:0.9rem;">2모둠</button>
+          <button type="button" class="select-btn team-select-btn" data-team="3모둠" style="min-height:38px; padding:6px 14px; font-size:0.9rem;">3모둠</button>
+          <button type="button" class="select-btn team-select-btn" data-team="4모둠" style="min-height:38px; padding:6px 14px; font-size:0.9rem;">4모둠</button>
+          <button type="button" class="select-btn team-select-btn" data-team="5모둠" style="min-height:38px; padding:6px 14px; font-size:0.9rem;">5모둠</button>
+          <button type="button" class="select-btn team-select-btn" data-team="6모둠" style="min-height:38px; padding:6px 14px; font-size:0.9rem;">6모둠</button>
+        </div>
+      </div>
+      <div style="font-size:0.9rem; color:#718096;">
+        💡 자기 모둠 글에는 공감을 누를 수 없어요. 다른 모둠의 좋은 제안을 응원해 주세요!
+      </div>
+    </div>
+
+    <!-- 교사용 TV 발표 모드 상단 바 -->
+    <div id="teacherHeaderBar" class="card" style="display:none; padding: 18px 24px; background:linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 100%); border: 3px solid #8B5CF6;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;">
+        <div>
+          <span class="step-indicator" style="background:#8B5CF6; color:#FFFFFF; border:none;">전자칠판 / TV 발표 전용</span>
+          <h2 style="font-size: 1.8rem; color:#5B21B6; margin-top:4px;">우리 반 최고의 제안 선정 및 발표</h2>
+          <p style="color:#6B7280; font-size:1rem;">공감 하트를 많이 받은 순서대로 제안서가 정렬되어 있습니다.</p>
+        </div>
+        <div>
+          <button type="button" id="showTopRankModalBtn" class="btn-primary" style="background:#8B5CF6; width:auto; padding:14px 28px; font-size:1.15rem; box-shadow:0 6px 20px rgba(139,92,246,0.35);">
+            <span>🏆 1·2위 제안 크게 보기</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 모둠별 필터 탭 -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
+      <div style="display:flex; gap:6px; flex-wrap:wrap;" id="filterTeamGroup">
+        <button type="button" class="header-btn active filter-btn" data-filter="all">전체 모둠 보기</button>
+        <button type="button" class="header-btn filter-btn" data-filter="1모둠">1모둠</button>
+        <button type="button" class="header-btn filter-btn" data-filter="2모둠">2모둠</button>
+        <button type="button" class="header-btn filter-btn" data-filter="3모둠">3모둠</button>
+        <button type="button" class="header-btn filter-btn" data-filter="4모둠">4모둠</button>
+        <button type="button" class="header-btn filter-btn" data-filter="5모둠">5모둠</button>
+        <button type="button" class="header-btn filter-btn" data-filter="6모둠">6모둠</button>
+      </div>
+
+      <div style="font-size:0.95rem; font-weight:700; color:#2E7D5B;">
+        등록된 제안서: <span id="totalProposalCount">0</span>개
+      </div>
+    </div>
+
+    <!-- 제안서 카드 그리드 -->
+    <div class="board-grid" id="proposalsGrid">
+      <div style="grid-column: 1 / -1; text-align:center; padding: 60px 20px; color:#A0AEC0;">
+        제안서를 불러오는 중입니다...
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 1·2위 제안 크게 보기 풀스크린 모달 (TV 발표용) -->
+  <div id="topRankModal" class="fullscreen-modal">
+    <div class="modal-content-box" style="max-width: 1100px; padding: 36px;">
+      <button type="button" id="closeTopRankModal" class="modal-close-btn">✕</button>
+      
+      <div style="text-align:center; margin-bottom: 24px;">
+        <div style="font-size: 3.5rem; margin-bottom: 6px;">🎉</div>
+        <h1 style="font-size: 2.3rem; color: #2E7D5B;">우리 반이 가장 공감한 명예의 제안</h1>
+        <p style="color: #718096; font-size: 1.1rem;">친구들의 마음에 가장 깊이 닿은 1위와 2위 제안서입니다.</p>
+      </div>
+
+      <div id="topRankCardsContainer" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px;">
+        <!-- JS에서 1위, 2위 카드 동적 렌더링 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 댓글 작성 모달 -->
+  <div id="commentModal" class="fullscreen-modal">
+    <div class="modal-content-box" style="max-width: 600px;">
+      <button type="button" id="closeCommentModal" class="modal-close-btn">✕</button>
+      <span class="step-indicator" style="background:#EBF5F0; color:#2E7D5B; border-color:#92CEB3;">따뜻한 생각 나누기</span>
+      <h2 style="font-size: 1.6rem; color:#2E7D5B; margin-top:4px; margin-bottom: 6px;" id="modalProposalTitle">제안서 제목</h2>
+      <p style="font-size: 0.95rem; color:#718096; margin-bottom: 18px;" id="modalProposalTeam">모둠 정보</p>
+
+      <!-- 댓글 유형 탭 (좋은 점 vs 보완할 점) -->
+      <div style="display:flex; gap:8px; margin-bottom: 14px;">
+        <button type="button" id="tabGood" class="btn-primary" style="flex:1; padding:10px; font-size:0.95rem; background:#2E7D5B;">
+          <span>👍 좋은 점 칭찬하기</span>
+        </button>
+        <button type="button" id="tabIdea" class="btn-secondary" style="flex:1; padding:10px; font-size:0.95rem;">
+          <span>💡 더 좋은 생각 더하기</span>
+        </button>
+      </div>
+
+      <!-- 도움 문장 버튼들 -->
+      <div style="margin-bottom: 12px;">
+        <div style="font-size: 0.85rem; font-weight:700; color:#4A5568; margin-bottom: 6px;">도움 문장 터치해서 넣기:</div>
+        <div id="scaffoldButtonsWrap" style="display:flex; flex-direction:column; gap:6px;">
+          <!-- JS 주입 -->
+        </div>
+      </div>
+
+      <!-- 입력란 -->
+      <div class="form-group">
+        <input type="text" id="commentAuthorName" class="text-input" placeholder="내 이름 (예: 민준)" maxlength="20" style="margin-bottom:8px;">
+        <textarea id="commentText" class="text-textarea" placeholder="친구에게 힘이 되는 따뜻한 글을 남겨주세요." maxlength="150" style="min-height:90px;"></textarea>
+      </div>
+
+      <button type="button" id="submitCommentBtn" class="btn-primary" style="padding:14px;">
+        <span>✏️ 댓글 등록하기</span>
+      </button>
+
+      <!-- 기존 댓글 목록 -->
+      <div style="margin-top: 24px; border-top: 2px dashed #E2E8F0; padding-top: 16px;">
+        <h3 style="font-size: 1.15rem; color:#2D3748; margin-bottom: 10px;">친구들이 남긴 댓글 (<span id="modalCommentCount">0</span>)</h3>
+        <div id="modalCommentsList" style="display:flex; flex-direction:column; gap:8px; max-height: 200px; overflow-y:auto;">
+          <!-- 댓글 목록 -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 토스트 알림 -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script type="module">
+    import {
+      subscribeProposals, likeProposal, isProposalLikedLocally,
+      addProposalComment, subscribeProposalComments, containsBadWords
+    } from './app.js';
+
+    // URL 파라미터로 role 확인
+    const urlParams = new URLSearchParams(window.location.search);
+    let isTeacherMode = urlParams.get('role') === 'teacher';
+
+    let allProposals = [];
+    let currentFilter = 'all';
+    let myTeam = '1모둠';
+    let activeCommentProposalId = null;
+    let activeCommentUnsub = null;
+    let commentType = 'good'; // 'good' | 'idea'
+
+    // DOM Elements
+    const roleBadge = document.getElementById('roleBadge');
+    const toggleRoleBtn = document.getElementById('toggleRoleBtn');
+    const studentHeaderBar = document.getElementById('studentHeaderBar');
+    const teacherHeaderBar = document.getElementById('teacherHeaderBar');
+    const myTeamButtonGroup = document.getElementById('myTeamButtonGroup');
+    const filterTeamGroup = document.getElementById('filterTeamGroup');
+    const proposalsGrid = document.getElementById('proposalsGrid');
+    const totalProposalCount = document.getElementById('totalProposalCount');
+    const showTopRankModalBtn = document.getElementById('showTopRankModalBtn');
+    const topRankModal = document.getElementById('topRankModal');
+    const closeTopRankModal = document.getElementById('closeTopRankModal');
+    const topRankCardsContainer = document.getElementById('topRankCardsContainer');
+
+    // 댓글 모달 DOM
+    const commentModal = document.getElementById('commentModal');
+    const closeCommentModal = document.getElementById('closeCommentModal');
+    const modalProposalTitle = document.getElementById('modalProposalTitle');
+    const modalProposalTeam = document.getElementById('modalProposalTeam');
+    const tabGood = document.getElementById('tabGood');
+    const tabIdea = document.getElementById('tabIdea');
+    const scaffoldButtonsWrap = document.getElementById('scaffoldButtonsWrap');
+    const commentAuthorName = document.getElementById('commentAuthorName');
+    const commentText = document.getElementById('commentText');
+    const submitCommentBtn = document.getElementById('submitCommentBtn');
+    const modalCommentCount = document.getElementById('modalCommentCount');
+    const modalCommentsList = document.getElementById('modalCommentsList');
+
+    function showToast(msg, isWarn = true) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      if (isWarn) toast.style.background = '#852D19';
+      toast.innerHTML = `<span>${isWarn ? '⚠️' : '❤️'}</span><span>${msg}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // 모드 설정 함수
+    function applyRoleMode() {
+      if (isTeacherMode) {
+        roleBadge.textContent = '교사용 TV 발표 모드';
+        roleBadge.style.background = '#EDE9FE';
+        roleBadge.style.color = '#5B21B6';
+        studentHeaderBar.style.display = 'none';
+        teacherHeaderBar.style.display = 'block';
+        toggleRoleBtn.innerHTML = '👤 학생 활동 모드로 전환';
+        toggleRoleBtn.style.background = '#FEE2E2';
+        toggleRoleBtn.style.color = '#991B1B';
+        toggleRoleBtn.style.borderColor = '#FECACA';
+      } else {
+        roleBadge.textContent = '학생 활동 모드';
+        roleBadge.style.background = '#FEE2E2';
+        roleBadge.style.color = '#B91C1C';
+        studentHeaderBar.style.display = 'flex';
+        teacherHeaderBar.style.display = 'none';
+        toggleRoleBtn.innerHTML = '📺 교사용 TV 모드';
+        toggleRoleBtn.style.background = '#F3E8FF';
+        toggleRoleBtn.style.color = '#6B21A8';
+        toggleRoleBtn.style.borderColor = '#D8B4FE';
+      }
+      renderProposals();
+    }
+
+    toggleRoleBtn.addEventListener('click', () => {
+      isTeacherMode = !isTeacherMode;
+      const newUrl = new URL(window.location);
+      if (isTeacherMode) {
+        newUrl.searchParams.set('role', 'teacher');
+      } else {
+        newUrl.searchParams.delete('role');
+      }
+      window.history.pushState({}, '', newUrl);
+      applyRoleMode();
+    });
+
+    // 학생 모둠 선택
+    myTeamButtonGroup.addEventListener('click', (e) => {
+      const btn = e.target.closest('.team-select-btn');
+      if (!btn) return;
+      myTeamButtonGroup.querySelectorAll('.team-select-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      myTeam = btn.getAttribute('data-team');
+      renderProposals();
+    });
+
+    // 필터 탭 클릭
+    filterTeamGroup.addEventListener('click', (e) => {
+      const btn = e.target.closest('.filter-btn');
+      if (!btn) return;
+      filterTeamGroup.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.getAttribute('data-filter');
+      renderProposals();
+    });
+
+    // 실시간 제안서 구독
+    subscribeProposals((proposals) => {
+      allProposals = proposals;
+      renderProposals();
+    });
+
+    function renderProposals() {
+      totalProposalCount.textContent = allProposals.length;
+
+      let list = [...allProposals];
+
+      // 교사용 TV 모드에서는 기본 공감 순 정렬
+      if (isTeacherMode) {
+        list.sort((a, b) => (b.likes || 0) - (a.likes || 0));
+      }
+
+      // 모둠 필터링
+      if (currentFilter !== 'all') {
+        list = list.filter(p => p.team === currentFilter);
+      }
+
+      if (list.length === 0) {
+        proposalsGrid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align:center; padding: 60px 20px; background:#FFFFFF; border-radius:16px; border:2px dashed #CBD5E0;">
+            <div style="font-size:3rem; margin-bottom:8px;">📝</div>
+            <h3 style="font-size:1.3rem; color:#4A5568; margin-bottom:6px;">아직 등록된 제안서가 없습니다.</h3>
+            <p style="color:#718096; margin-bottom:16px;">우리 모둠의 첫 제안서를 작성해 보세요!</p>
+            <a href="./write.html" class="btn-primary" style="display:inline-flex; width:auto; padding:12px 24px; text-decoration:none;">제안서 쓰러 가기 →</a>
+          </div>
+        `;
+        return;
+      }
+
+      proposalsGrid.innerHTML = '';
+      list.forEach((prop, index) => {
+        const isMyOwn = prop.team === myTeam;
+        const hasLiked = isProposalLikedLocally(prop.id);
+        const likesCount = prop.likes || 0;
+
+        const card = document.createElement('div');
+        card.className = 'proposal-card';
+
+        // 랭킹 뱃지 (교사용 모드일 때)
+        let rankBadgeHtml = '';
+        if (isTeacherMode && currentFilter === 'all') {
+          if (index === 0 && likesCount > 0) {
+            rankBadgeHtml = `<span class="rank-badge rank-1" style="font-size:0.85rem; padding:3px 10px;">🥇 1위</span>`;
+          } else if (index === 1 && likesCount > 0) {
+            rankBadgeHtml = `<span class="rank-badge rank-2" style="font-size:0.85rem; padding:3px 10px;">🥈 2위</span>`;
+          }
+        }
+
+        card.innerHTML = `
+          <div>
+            <div class="proposal-badge-row">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span class="team-badge">${prop.team}</span>
+                <span class="recipient-tag">받는 사람: ${prop.recipient}</span>
+                ${rankBadgeHtml}
+              </div>
+              <span style="font-size:0.85rem; color:#718096; font-weight:600;">작성자: ${prop.name}</span>
+            </div>
+
+            <div style="font-size:0.9rem; color:#718096; margin-bottom:4px;">
+              📍 <strong>문제 상황:</strong> ${prop.problem}
+            </div>
+
+            <!-- 제안 내용 크게 강조 -->
+            <div class="proposal-highlight serif-font">
+              💡 "${prop.proposal}"
+            </div>
+
+            <div style="font-size:0.95rem; color:#4A5568; line-height:1.6; margin-top:10px; background:#F8FAFC; padding:10px 14px; border-radius:10px;">
+              <div><strong>까닭①</strong> ${prop.reason1}</div>
+              ${prop.reason2 ? `<div style="margin-top:4px;"><strong>까닭②</strong> ${prop.reason2}</div>` : ''}
+            </div>
+          </div>
+
+          <!-- 하단 공감 & 댓글 액션 바 -->
+          <div style="margin-top:18px; pt-3; border-top:1px solid #E2E8F0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              ${
+                isTeacherMode
+                  ? `<div style="font-size:1.15rem; font-weight:800; color:#EA580C; display:flex; align-items:center; gap:4px;">
+                      <span>❤️ 공감</span> <span>${likesCount}개</span>
+                    </div>`
+                  : isMyOwn
+                    ? `<button type="button" class="like-button" disabled style="background:#F1F5F9; border-color:#CBD5E0; color:#64748B;">
+                        <span>우리 모둠 글 😊</span> <span>(${likesCount})</span>
+                      </button>`
+                    : `<button type="button" class="like-button ${hasLiked ? 'liked' : ''}" data-id="${prop.id}" ${hasLiked ? 'disabled' : ''}>
+                        <span>${hasLiked ? '❤️ 공감함' : '🤍 공감'}</span>
+                        <span class="likes-num">${likesCount}</span>
+                      </button>`
+              }
+            </div>
+
+            <div>
+              <button type="button" class="btn-secondary open-comment-btn" data-id="${prop.id}" style="padding:6px 14px; font-size:0.85rem; font-weight:600;">
+                💬 생각 나누기
+              </button>
+            </div>
+          </div>
+        `;
+
+        // 공감 버튼 이벤트 (학생용)
+        const likeBtn = card.querySelector('.like-button:not([disabled])');
+        if (likeBtn) {
+          likeBtn.addEventListener('click', async () => {
+            const pId = likeBtn.getAttribute('data-id');
+            likeBtn.disabled = true;
+            try {
+              await likeProposal(pId);
+              showToast('친구 제안에 공감을 보냈어요! ❤️', false);
+              renderProposals();
+            } catch (err) {
+              showToast(err.message || '공감 처리 중 오류가 발생했습니다.');
+              likeBtn.disabled = false;
+            }
+          });
+        }
+
+        // 댓글 버튼 이벤트
+        const commentBtn = card.querySelector('.open-comment-btn');
+        if (commentBtn) {
+          commentBtn.addEventListener('click', () => {
+            openCommentModal(prop);
+          });
+        }
+
+        proposalsGrid.appendChild(card);
+      });
+    }
+
+    // 1·2위 크게 보기 모달 (교사용 TV)
+    showTopRankModalBtn.addEventListener('click', () => {
+      const sorted = [...allProposals].sort((a, b) => (b.likes || 0) - (a.likes || 0));
+      if (sorted.length === 0) {
+        alert('아직 등록된 제안서가 없습니다.');
+        return;
+      }
+
+      topRankCardsContainer.innerHTML = '';
+
+      const top1 = sorted[0];
+      const top2 = sorted.length > 1 ? sorted[1] : null;
+
+      // 1위 카드
+      const card1 = document.createElement('div');
+      card1.className = 'card';
+      card1.style.border = '4px solid #F59E0B';
+      card1.style.background = 'linear-gradient(180deg, #FFFDF5 0%, #FFFFFF 100%)';
+      card1.innerHTML = `
+        <div style="text-align:center; margin-bottom:12px;">
+          <span class="rank-badge rank-1" style="font-size:1.3rem;">🥇 1위 명예의 제안</span>
+        </div>
+        <div style="text-align:center; font-size:1.2rem; font-weight:700; color:#2E7D5B; margin-bottom:4px;">
+          ${top1.team} (${top1.name})
+        </div>
+        <div style="text-align:center; font-size:0.95rem; color:#718096; margin-bottom:16px;">
+          받는 사람: ${top1.recipient}
+        </div>
+
+        <div style="background:#FFF9E6; border-left:6px solid #F59E0B; padding:16px; border-radius:0 12px 12px 0; font-size:1.45rem; font-weight:800; color:#2E7D5B; line-height:1.5; margin-bottom:16px; font-family:'Gowun Batang', serif;">
+          "${top1.proposal}"
+        </div>
+
+        <div style="font-size:1.05rem; color:#334155; line-height:1.7; background:#F8FAFC; padding:14px; border-radius:12px;">
+          <div style="margin-bottom:6px;"><strong>📍 문제 상황:</strong> ${top1.problem}</div>
+          <div style="margin-bottom:4px;"><strong>💡 까닭①:</strong> ${top1.reason1}</div>
+          ${top1.reason2 ? `<div><strong>💡 까닭②:</strong> ${top1.reason2}</div>` : ''}
+        </div>
+
+        <div style="text-align:center; margin-top:20px; font-size:1.8rem; font-weight:900; color:#EA580C;">
+          ❤️ 공감 ${top1.likes || 0}표
+        </div>
+      `;
+      topRankCardsContainer.appendChild(card1);
+
+      // 2위 카드
+      if (top2) {
+        const card2 = document.createElement('div');
+        card2.className = 'card';
+        card2.style.border = '4px solid #94A3B8';
+        card2.style.background = 'linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%)';
+        card2.innerHTML = `
+          <div style="text-align:center; margin-bottom:12px;">
+            <span class="rank-badge rank-2" style="font-size:1.3rem;">🥈 2위 명예의 제안</span>
+          </div>
+          <div style="text-align:center; font-size:1.2rem; font-weight:700; color:#1E293B; margin-bottom:4px;">
+            ${top2.team} (${top2.name})
+          </div>
+          <div style="text-align:center; font-size:0.95rem; color:#718096; margin-bottom:16px;">
+            받는 사람: ${top2.recipient}
+          </div>
+
+          <div style="background:#F1F5F9; border-left:6px solid #64748B; padding:16px; border-radius:0 12px 12px 0; font-size:1.45rem; font-weight:800; color:#1E293B; line-height:1.5; margin-bottom:16px; font-family:'Gowun Batang', serif;">
+            "${top2.proposal}"
+          </div>
+
+          <div style="font-size:1.05rem; color:#334155; line-height:1.7; background:#F8FAFC; padding:14px; border-radius:12px;">
+            <div style="margin-bottom:6px;"><strong>📍 문제 상황:</strong> ${top2.problem}</div>
+            <div style="margin-bottom:4px;"><strong>💡 까닭①:</strong> ${top2.reason1}</div>
+            ${top2.reason2 ? `<div><strong>💡 까닭②:</strong> ${top2.reason2}</div>` : ''}
+          </div>
+
+          <div style="text-align:center; margin-top:20px; font-size:1.8rem; font-weight:900; color:#EA580C;">
+            ❤️ 공감 ${top2.likes || 0}표
+          </div>
+        `;
+        topRankCardsContainer.appendChild(card2);
+      }
+
+      topRankModal.classList.add('active');
+    });
+
+    closeTopRankModal.addEventListener('click', () => {
+      topRankModal.classList.remove('active');
+    });
+
+    // 댓글 모달 관리
+    function openCommentModal(prop) {
+      activeCommentProposalId = prop.id;
+      modalProposalTitle.textContent = `"${prop.proposal}"`;
+      modalProposalTeam.textContent = `${prop.team} (${prop.name})의 제안에 대한 생각 나누기`;
+
+      commentType = 'good';
+      updateCommentTabUI();
+      updateScaffolds();
+
+      commentText.value = '';
+
+      if (activeCommentUnsub) activeCommentUnsub();
+      activeCommentUnsub = subscribeProposalComments(prop.id, (comments) => {
+        modalCommentCount.textContent = comments.length;
+        renderCommentsList(comments);
+      });
+
+      commentModal.classList.add('active');
+    }
+
+    closeCommentModal.addEventListener('click', () => {
+      commentModal.classList.remove('active');
+      if (activeCommentUnsub) {
+        activeCommentUnsub();
+        activeCommentUnsub = null;
+      }
+    });
+
+    // 댓글 탭 UI 변경
+    function updateCommentTabUI() {
+      if (commentType === 'good') {
+        tabGood.className = 'btn-primary';
+        tabGood.style.background = '#2E7D5B';
+        tabIdea.className = 'btn-secondary';
+        tabIdea.style.background = '#FFFFFF';
+      } else {
+        tabIdea.className = 'btn-primary';
+        tabIdea.style.background = '#3B82F6';
+        tabGood.className = 'btn-secondary';
+        tabGood.style.background = '#FFFFFF';
+      }
+      updateScaffolds();
+    }
+
+    tabGood.addEventListener('click', () => {
+      commentType = 'good';
+      updateCommentTabUI();
+    });
+
+    tabIdea.addEventListener('click', () => {
+      commentType = 'idea';
+      updateCommentTabUI();
+    });
+
+    // 4학년용 도움 문장 스캐폴드
+    function updateScaffolds() {
+      scaffoldButtonsWrap.innerHTML = '';
+      const goodSentences = [
+        "제안이 구체적이어서 쉽게 따라 할 수 있어서 좋아요! 👍",
+        "우리 학교에 꼭 필요한 멋진 생각이에요! ✨",
+        "까닭이 제안과 아주 잘 어울려요! 👏"
+      ];
+      const ideaSentences = [
+        "이런 실천 규칙도 함께 정하면 더 좋을 것 같아요! 💡",
+        "안내 포스터도 같이 붙이면 더 효과적일 것 같아요! 🎨",
+        "쉬는 시간뿐만 아니라 점심시간에도 함께 지켜요! ⏰"
+      ];
+
+      const list = commentType === 'good' ? goodSentences : ideaSentences;
+      list.forEach(txt => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'btn-secondary';
+        btn.style.textAlign = 'left';
+        btn.style.padding = '6px 12px';
+        btn.style.fontSize = '0.85rem';
+        btn.textContent = txt;
+        btn.addEventListener('click', () => {
+          commentText.value = txt;
+          commentText.focus();
+        });
+        scaffoldButtonsWrap.appendChild(btn);
+      });
+    }
+
+    // 댓글 목록 렌더링
+    function renderCommentsList(comments) {
+      modalCommentsList.innerHTML = '';
+      if (comments.length === 0) {
+        modalCommentsList.innerHTML = '<div style="text-align:center; color:#A0AEC0; font-size:0.9rem; padding:16px;">아직 작성된 댓글이 없습니다. 첫 댓글을 남겨보세요!</div>';
+        return;
+      }
+
+      comments.forEach(c => {
+        const item = document.createElement('div');
+        item.style.padding = '8px 12px';
+        item.style.borderRadius = '8px';
+        item.style.fontSize = '0.9rem';
+        item.style.lineHeight = '1.4';
+        item.style.background = c.type === 'good' ? '#F0FDF4' : '#EFF6FF';
+        item.style.border = `1px solid ${c.type === 'good' ? '#BBF7D0' : '#BFDBFE'}`;
+
+        item.innerHTML = `
+          <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
+            <strong style="color:${c.type === 'good' ? '#166534' : '#1E40AF'};">${c.type === 'good' ? '👍 좋은 점' : '💡 더 좋은 생각'} (${c.name})</strong>
+            <span style="font-size:0.75rem; color:#94A3B8;">${c.team || ''}</span>
+          </div>
+          <div style="color:#334155;">${c.text}</div>
+        `;
+        modalCommentsList.appendChild(item);
+      });
+    }
+
+    // 댓글 등록 버튼
+    submitCommentBtn.addEventListener('click', async () => {
+      const name = commentAuthorName.value.trim();
+      const text = commentText.value.trim();
+
+      if (!name) {
+        showToast('이름을 입력해 주세요.');
+        commentAuthorName.focus();
+        return;
+      }
+      if (!text) {
+        showToast('댓글 내용을 입력해 주세요.');
+        commentText.focus();
+        return;
+      }
+
+      if (containsBadWords(text) || containsBadWords(name)) {
+        showToast('친구에게 힘이 되는 고운 말을 사용해 주세요! 😊');
+        return;
+      }
+
+      submitCommentBtn.disabled = true;
+      submitCommentBtn.textContent = '등록 중...';
+
+      try {
+        await addProposalComment(activeCommentProposalId, {
+          team: myTeam,
+          name,
+          type: commentType,
+          text
+        });
+        commentText.value = '';
+        showToast('댓글이 등록되었습니다! ✨', false);
+      } catch (err) {
+        showToast(err.message || '댓글 등록 실패');
+      } finally {
+        submitCommentBtn.disabled = false;
+        submitCommentBtn.textContent = '✏️ 댓글 등록하기';
+      }
+    });
+
+    // 시작 시 모드 적용
+    applyRoleMode();
+  </script>
+</body>
+</html>

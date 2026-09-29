@@ -1,0 +1,46 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 초등학교 4학년 국어 "제안하는 글쓰기" 공개수업용 보안 규칙
+    // 학생 로그인 없이 URL 접속만으로 참여 가능한 공개 학급 모드입니다.
+
+    // 1. 도입 설문 응답 (우리 반 불편함 탐정단)
+    match /responses/{responseId} {
+      allow read: if true;
+      allow create: if request.resource.data.location is string
+                    && request.resource.data.issue is string
+                    && request.resource.data.location.size() <= 50
+                    && request.resource.data.issue.size() <= 50;
+      allow delete: if true; // 교사용 전체 초기화 지원
+      allow update: if true;
+    }
+
+    // 2. 모둠별 제안하는 글 (활동 3 & 4)
+    match /proposals/{proposalId} {
+      allow read: if true;
+      allow create: if request.resource.data.team is string
+                    && request.resource.data.name is string
+                    && request.resource.data.recipient is string
+                    && request.resource.data.proposal is string
+                    && request.resource.data.reason1 is string
+                    && request.resource.data.proposal.size() <= 300;
+      // 공감(좋아요) 수 증가 및 교사 초기화 허용
+      allow update: if true;
+      allow delete: if true;
+
+      // 제안서별 공감 댓글 (활동 4)
+      match /comments/{commentId} {
+        allow read: if true;
+        allow create: if request.resource.data.text is string
+                      && request.resource.data.text.size() <= 300;
+        allow delete: if true;
+      }
+    }
+
+    // 기본 거부
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

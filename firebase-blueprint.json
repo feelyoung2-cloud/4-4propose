@@ -1,0 +1,138 @@
+{
+  "entities": {
+    "Response": {
+      "title": "Response",
+      "description": "학생용 도입 설문 우리 반 불편함 탐정단 응답",
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "string",
+          "description": "불편함을 느낀 장소",
+          "maxLength": 50
+        },
+        "issue": {
+          "type": "string",
+          "description": "불편했던 문제 유형",
+          "maxLength": 50
+        },
+        "situation": {
+          "type": "string",
+          "description": "구체적인 불편 상황 설명",
+          "maxLength": 150
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "작성 일시"
+        }
+      },
+      "required": ["location", "issue"]
+    },
+    "Proposal": {
+      "title": "Proposal",
+      "description": "학생 모둠별 제안하는 글",
+      "type": "object",
+      "properties": {
+        "team": {
+          "type": "string",
+          "description": "모둠 번호 (1모둠~6모둠)",
+          "maxLength": 20
+        },
+        "name": {
+          "type": "string",
+          "description": "작성자 이름",
+          "maxLength": 50
+        },
+        "recipient": {
+          "type": "string",
+          "description": "받는 사람",
+          "maxLength": 50
+        },
+        "problem": {
+          "type": "string",
+          "description": "문제 상황",
+          "maxLength": 200
+        },
+        "proposal": {
+          "type": "string",
+          "description": "제안하는 내용",
+          "maxLength": 300
+        },
+        "reason1": {
+          "type": "string",
+          "description": "까닭 1 (필수)",
+          "maxLength": 300
+        },
+        "reason2": {
+          "type": "string",
+          "description": "까닭 2 (선택)",
+          "maxLength": 300
+        },
+        "likes": {
+          "type": "number",
+          "description": "공감 하트 수"
+        },
+        "submitted": {
+          "type": "boolean",
+          "description": "제출 여부"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "작성 일시"
+        }
+      },
+      "required": ["team", "name", "recipient", "proposal", "reason1"]
+    },
+    "Comment": {
+      "title": "Comment",
+      "description": "제안서에 달린 공감 댓글 및 보완 의견",
+      "type": "object",
+      "properties": {
+        "team": {
+          "type": "string",
+          "description": "댓글 작성 모둠",
+          "maxLength": 20
+        },
+        "name": {
+          "type": "string",
+          "description": "댓글 작성자 이름",
+          "maxLength": 50
+        },
+        "type": {
+          "type": "string",
+          "description": "댓글 유형: good (좋은 점) 또는 idea (보완할 점)",
+          "enum": ["good", "idea"]
+        },
+        "text": {
+          "type": "string",
+          "description": "댓글 내용",
+          "maxLength": 200
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "작성 일시"
+        }
+      },
+      "required": ["text", "type"]
+    }
+  },
+  "firestore": {
+    "/responses/{responseId}": {
+      "schema": {
+        "$ref": "#/entities/Response"
+      },
+      "description": "학생들의 도입 설문 응답 목록"
+    },
+    "/proposals/{proposalId}": {
+      "schema": {
+        "$ref": "#/entities/Proposal"
+      },
+      "description": "학생들이 작성한 제안하는 글 목록"
+    },
+    "/proposals/{proposalId}/comments/{commentId}": {
+      "schema": {
+        "$ref": "#/entities/Comment"
+      },
+      "description": "각 제안서에 달린 친구들의 공감 및 보완 댓글"
+    }
+  }
+}
