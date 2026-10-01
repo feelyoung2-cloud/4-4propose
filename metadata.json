@@ -1,6 +1,6 @@
 {
   "name": "초등 4학년 국어 제안하는 글쓰기",
-  "description": "초등학교 4학년 1학기 국어 '제안하는 글쓰기' 공개수업을 위한 실시간 상호작용 웹앱 (불편함 탐정단 설문, 교사용 TV 결과, 제안 글쓰기, 공감 게시판)",
+  "description": "초등학교 4학년 2학기 국어 '제안하는 글쓰기' 공개수업을 위한 실시간 상호작용 웹앱 (불편함 탐정단 설문, 교사용 TV 결과, 제안 글쓰기, 공감 게시판)",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
