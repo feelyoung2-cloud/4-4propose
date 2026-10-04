@@ -804,3 +804,362 @@ h1, h2, h3, h4, .serif-font, .letter-preview, .proposal-highlight {
     padding: 20px 14px 60px;
   }
 }
+
+/* ================================================================
+   🤖 우측 하단 질문봇 (AI Chatbot) 스타일링
+   ================================================================ */
+.qbot-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  font-family: 'Nanum Gothic', sans-serif;
+}
+
+/* 플로팅 토글 버튼 */
+.qbot-toggle-btn {
+  background: linear-gradient(135deg, #1E5E41 0%, #13422E 100%);
+  color: #FFFFFF;
+  border: 3px solid #EAC878;
+  border-radius: 50px;
+  padding: 12px 22px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 8px 24px rgba(30, 94, 65, 0.35);
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  user-select: none;
+}
+
+.qbot-toggle-btn:hover {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 12px 30px rgba(30, 94, 65, 0.45);
+  border-color: #F6D88E;
+}
+
+.qbot-toggle-btn.active {
+  background: linear-gradient(135deg, #D4972C 0%, #B88022 100%);
+  border-color: #FFFFFF;
+}
+
+.qbot-toggle-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+  display: inline-block;
+  animation: qbotBounce 2.5s infinite ease-in-out;
+}
+
+@keyframes qbotBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.qbot-toggle-label {
+  letter-spacing: -0.01em;
+}
+
+.qbot-unread-dot {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 14px;
+  height: 14px;
+  background: #E3593B;
+  border: 2px solid #FFFFFF;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(227, 89, 59, 0.7);
+}
+
+/* 챗봇 대화창 */
+.qbot-window {
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  width: 380px;
+  height: 550px;
+  max-height: calc(100vh - 120px);
+  background: #FFFFFF;
+  border-radius: 22px;
+  border: 3px solid #E2DBD0;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.22), 0 4px 12px rgba(30, 94, 65, 0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: scale(0.9) translateY(20px);
+  opacity: 0;
+  transform-origin: bottom right;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.qbot-window.active {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* 상단 헤더 */
+.qbot-header {
+  background: linear-gradient(135deg, #1E5E41 0%, #164832 100%);
+  color: #FFFFFF;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.qbot-header-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.qbot-avatar {
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid #EAC878;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.qbot-title {
+  font-family: 'Nanum Myeongjo', serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.qbot-subtitle {
+  font-size: 0.85rem;
+  opacity: 0.88;
+  margin-top: 2px;
+}
+
+.qbot-header-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.qbot-icon-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #FFFFFF;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+
+.qbot-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* 추천 질문 칩 바 */
+.qbot-chips-bar {
+  background: #FDF9F2;
+  border-bottom: 1px solid #EFE5D5;
+  padding: 10px 14px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.qbot-chips-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.qbot-chip {
+  background: #FFFFFF;
+  border: 1.5px solid #E4BE75;
+  color: #8C5F12;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.qbot-chip:hover {
+  background: #FDF4E2;
+  border-color: #D4972C;
+  transform: translateY(-1px);
+}
+
+/* 메시지 목록 */
+.qbot-messages {
+  flex: 1;
+  padding: 18px 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: #F8F6F0;
+}
+
+.qbot-msg-row {
+  display: flex;
+  gap: 10px;
+  max-width: 90%;
+  animation: qbotMsgFadeIn 0.25s ease forwards;
+}
+
+@keyframes qbotMsgFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.qbot-msg-row.bot {
+  align-self: flex-start;
+}
+
+.qbot-msg-row.user {
+  align-self: flex-end;
+  justify-content: flex-end;
+}
+
+.qbot-msg-avatar {
+  width: 32px;
+  height: 32px;
+  background: #FFFFFF;
+  border: 1.5px solid #D9C8B4;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.qbot-bubble {
+  padding: 12px 16px;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  position: relative;
+  word-break: break-word;
+}
+
+.qbot-bubble.bot {
+  background: #FFFFFF;
+  color: var(--text-main);
+  border: 1.5px solid #E2DBD0;
+  border-radius: 16px 16px 16px 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.qbot-bubble.user {
+  background: linear-gradient(135deg, #1E5E41 0%, #164832 100%);
+  color: #FFFFFF;
+  border-radius: 16px 16px 4px 16px;
+  box-shadow: 0 3px 10px rgba(30, 94, 65, 0.25);
+  font-weight: 600;
+}
+
+/* 생각 중 로딩 인디케이터 */
+.qbot-thinking {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+}
+
+.qbot-dot {
+  width: 8px;
+  height: 8px;
+  margin: 0 3px;
+  background: #1E5E41;
+  border-radius: 50%;
+  display: inline-block;
+  animation: qbotDotPulse 1.4s infinite ease-in-out both;
+}
+
+.qbot-dot:nth-child(1) { animation-delay: -0.32s; }
+.qbot-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes qbotDotPulse {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1.1); opacity: 1; }
+}
+
+/* 하단 폼 입력 */
+.qbot-input-area {
+  background: #FFFFFF;
+  border-top: 2px solid #E2DBD0;
+  padding: 12px 14px;
+}
+
+.qbot-form {
+  display: flex;
+  gap: 8px;
+}
+
+.qbot-input {
+  flex: 1;
+  padding: 12px 14px;
+  font-size: 1.05rem;
+  font-family: inherit;
+  border: 2px solid #E2DBD0;
+  border-radius: 12px;
+  background: #FAF8F5;
+  color: #1F2937;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.qbot-input:focus {
+  border-color: #1E5E41;
+  background: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(30, 94, 65, 0.15);
+}
+
+.qbot-send-btn {
+  background: #1E5E41;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 12px;
+  padding: 0 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.qbot-send-btn:hover:not(:disabled) {
+  background: #164832;
+  transform: translateY(-1px);
+}
+
+.qbot-send-btn:disabled {
+  background: #CBD5E1;
+  cursor: not-allowed;
+}
+
+/* 모바일 화면 반응형 */
+@media (max-width: 480px) {
+  .qbot-container {
+    bottom: 16px;
+    right: 16px;
+  }
+  .qbot-window {
+    width: calc(100vw - 32px);
+    right: 0;
+    bottom: 64px;
+    height: 75vh;
+  }
+}
+
