@@ -135,15 +135,24 @@
     toggleBtn.addEventListener('click', () => toggleWindow());
     closeBtn.addEventListener('click', () => toggleWindow(false));
 
+    // 바깥 영역 클릭 시 닫기
+    document.addEventListener('click', (e) => {
+      if (isOpen && !botWrapper.contains(e.target)) {
+        toggleWindow(false);
+      }
+    });
+
     // 대화 초기화
     resetBtn.addEventListener('click', () => {
-      if (confirm('질문봇과의 대화를 새로 시작할까요?')) {
+      if (confirm('보노보노 질문봇과의 대화를 새로 시작할까요?')) {
         conversationHistory.length = 0;
         qbotMessages.innerHTML = `
           <div class="qbot-msg-row bot">
-            <div class="qbot-msg-avatar">🤖</div>
+            <div class="qbot-msg-avatar">
+              <img src="/bonobono.svg" alt="보노보노" class="qbot-bono-msg-img" />
+            </div>
             <div class="qbot-bubble bot">
-              대화를 새로 시작했어요! 궁금한 점이 생기면 언제든 물어보세요. ✨
+              대화를 새로 시작했어요! 궁금한 점이 생기면 언제든 물어보세요. 🐚✨
             </div>
           </div>
         `;
