@@ -95,7 +95,8 @@
       </div>
     `;
 
-    document.body.appendChild(botWrapper);
+    const mountTarget = document.getElementById('mobileFrameShell') || document.body;
+    mountTarget.appendChild(botWrapper);
 
     // 요소 참조
     const toggleBtn = document.getElementById('qbotToggleBtn');
