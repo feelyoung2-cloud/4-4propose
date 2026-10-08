@@ -17,9 +17,6 @@
       <span>제안하는 글쓰기</span>
       <span class="brand-badge">초등 4학년 국어</span>
     </a>
-    <div id="connectionStatus" class="header-btn" style="background:#FFF9E6; border-color:#E9C46A; color:#875A11;">
-      📡 확인 중...
-    </div>
   </header>
 
   <main class="main-container wide">
@@ -145,24 +142,6 @@
     </div>
   </main>
 
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      import(/* @vite-ignore */ '/app.js').then(m => {
-        const statusEl = document.getElementById('connectionStatus');
-        if (statusEl && m.getDatabaseMode) {
-          const mode = m.getDatabaseMode();
-          statusEl.innerHTML = mode.label;
-          if (mode.isCloud) {
-            statusEl.style.background = '#EBF5F0';
-            statusEl.style.borderColor = '#92CEB3';
-            statusEl.style.color = '#1B5E41';
-          }
-        }
-      }).catch(err => {
-        console.warn('App script loaded', err);
-      });
-    });
-  </script>
   <!-- 질문봇 (AI Chatbot) -->
   <script src="/chatbot.js"></script>
 </body>

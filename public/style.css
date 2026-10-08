@@ -806,7 +806,7 @@ h1, h2, h3, h4, .serif-font, .letter-preview, .proposal-highlight {
 }
 
 /* ================================================================
-   🤖 우측 상단 질문봇 (AI Chatbot) 스타일링
+   🤖 우측 상단 질문봇 (보노보노 AI Chatbot) 스타일링
    ================================================================ */
 .qbot-container {
   position: fixed;
@@ -816,41 +816,50 @@ h1, h2, h3, h4, .serif-font, .letter-preview, .proposal-highlight {
   font-family: 'Nanum Gothic', sans-serif;
 }
 
-/* 플로팅 토글 버튼 */
+/* 플로팅 토글 버튼 (크기 확대 & 보노보노) */
 .qbot-toggle-btn {
   background: linear-gradient(135deg, #1E5E41 0%, #13422E 100%);
   color: #FFFFFF;
-  border: 2.5px solid #EAC878;
+  border: 3px solid #64B5F6;
   border-radius: 50px;
-  padding: 8px 18px;
-  font-size: 1.05rem;
+  padding: 10px 22px;
+  font-size: 1.25rem;
   font-weight: 800;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 8px;
-  box-shadow: 0 4px 16px rgba(30, 94, 65, 0.35);
+  gap: 12px;
+  box-shadow: 0 6px 20px rgba(30, 94, 65, 0.4), 0 0 0 2px rgba(100, 181, 246, 0.4);
   transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
   user-select: none;
 }
 
 .qbot-toggle-btn:hover {
-  transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 8px 24px rgba(30, 94, 65, 0.45);
-  border-color: #F6D88E;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 10px 28px rgba(30, 94, 65, 0.5), 0 0 0 3px rgba(100, 181, 246, 0.6);
+  border-color: #90CAF9;
 }
 
 .qbot-toggle-btn.active {
-  background: linear-gradient(135deg, #D4972C 0%, #B88022 100%);
-  border-color: #FFFFFF;
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  border-color: #FDE047;
 }
 
 .qbot-toggle-icon {
-  font-size: 1.45rem;
-  line-height: 1;
-  display: inline-block;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   animation: qbotBounce 2.5s infinite ease-in-out;
+}
+
+.qbot-bono-icon {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 @keyframes qbotBounce {
@@ -866,26 +875,26 @@ h1, h2, h3, h4, .serif-font, .letter-preview, .proposal-highlight {
   position: absolute;
   top: -3px;
   right: -3px;
-  width: 12px;
-  height: 12px;
-  background: #E3593B;
+  width: 14px;
+  height: 14px;
+  background: #EF4444;
   border: 2px solid #FFFFFF;
   border-radius: 50%;
-  box-shadow: 0 0 8px rgba(227, 89, 59, 0.7);
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.8);
 }
 
-/* 챗봇 대화창 */
+/* 챗봇 대화창 (크기 대폭 확대: 440px x 630px) */
 .qbot-window {
   position: absolute;
-  top: 54px;
+  top: 60px;
   right: 0;
-  width: 380px;
-  height: 550px;
-  max-height: calc(100vh - 80px);
+  width: 440px;
+  height: 630px;
+  max-height: calc(100vh - 85px);
   background: #FFFFFF;
-  border-radius: 22px;
-  border: 3px solid #E2DBD0;
-  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.22), 0 4px 12px rgba(30, 94, 65, 0.08);
+  border-radius: 26px;
+  border: 3.5px solid #BFDBFE;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.25), 0 8px 24px rgba(30, 94, 65, 0.12);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -902,7 +911,7 @@ h1, h2, h3, h4, .serif-font, .letter-preview, .proposal-highlight {
 
 /* 상단 헤더 */
 .qbot-header {
-  background: linear-gradient(135deg, #1E5E41 0%, #164832 100%);
+  background: linear-gradient(135deg, #1E5E41 0%, #144933 100%);
   color: #FFFFFF;
   padding: 16px 20px;
   display: flex;
@@ -914,63 +923,72 @@ h1, h2, h3, h4, .serif-font, .letter-preview, .proposal-highlight {
 .qbot-header-info {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .qbot-avatar {
-  width: 42px;
-  height: 42px;
-  background: rgba(255, 255, 255, 0.2);
-  border: 2px solid #EAC878;
+  width: 52px;
+  height: 52px;
+  background: #FFFFFF;
+  border: 2.5px solid #64B5F6;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+  flex-shrink: 0;
+}
+
+.qbot-bono-header-img {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
 }
 
 .qbot-title {
   font-family: 'Nanum Myeongjo', serif;
-  font-size: 1.3rem;
+  font-size: 1.45rem;
   font-weight: 800;
   letter-spacing: -0.02em;
 }
 
 .qbot-subtitle {
-  font-size: 0.85rem;
-  opacity: 0.88;
+  font-size: 0.92rem;
+  opacity: 0.92;
   margin-top: 2px;
 }
 
 .qbot-header-actions {
   display: flex;
-  gap: 6px;
+  gap: 8px;
 }
 
 .qbot-icon-btn {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.18);
   border: none;
   color: #FFFFFF;
-  width: 34px;
-  height: 34px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.95rem;
-  transition: background 0.2s;
+  font-size: 1.1rem;
+  transition: all 0.2s;
 }
 
 .qbot-icon-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(1.08);
 }
 
 /* 추천 질문 칩 바 */
 .qbot-chips-bar {
   background: #FDF9F2;
-  border-bottom: 1px solid #EFE5D5;
-  padding: 10px 14px;
+  border-bottom: 1.5px solid #EFE5D5;
+  padding: 12px 16px;
   display: flex;
   gap: 8px;
   overflow-x: auto;
@@ -985,14 +1003,14 @@ h1, h2, h3, h4, .serif-font, .letter-preview, .proposal-highlight {
   background: #FFFFFF;
   border: 1.5px solid #E4BE75;
   color: #8C5F12;
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  padding: 6px 12px;
+  padding: 8px 14px;
   border-radius: 20px;
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .qbot-chip:hover {
@@ -1004,17 +1022,17 @@ h1, h2, h3, h4, .serif-font, .letter-preview, .proposal-highlight {
 /* 메시지 목록 */
 .qbot-messages {
   flex: 1;
-  padding: 18px 16px;
+  padding: 20px 18px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  background: #F8F6F0;
+  gap: 16px;
+  background: #F8F9FA;
 }
 
 .qbot-msg-row {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   max-width: 90%;
   animation: qbotMsgFadeIn 0.25s ease forwards;
 }
@@ -1034,22 +1052,29 @@ h1, h2, h3, h4, .serif-font, .letter-preview, .proposal-highlight {
 }
 
 .qbot-msg-avatar {
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   background: #FFFFFF;
-  border: 1.5px solid #D9C8B4;
+  border: 2px solid #93C5FD;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
   flex-shrink: 0;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.qbot-bono-msg-img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
 }
 
 .qbot-bubble {
-  padding: 12px 16px;
-  font-size: 1.05rem;
-  line-height: 1.6;
+  padding: 14px 18px;
+  font-size: 1.15rem;
+  line-height: 1.65;
   position: relative;
   word-break: break-word;
 }
@@ -1057,16 +1082,16 @@ h1, h2, h3, h4, .serif-font, .letter-preview, .proposal-highlight {
 .qbot-bubble.bot {
   background: #FFFFFF;
   color: var(--text-main);
-  border: 1.5px solid #E2DBD0;
-  border-radius: 16px 16px 16px 4px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  border: 1.5px solid #E2E8F0;
+  border-radius: 20px 20px 20px 4px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
 }
 
 .qbot-bubble.user {
   background: linear-gradient(135deg, #1E5E41 0%, #164832 100%);
   color: #FFFFFF;
-  border-radius: 16px 16px 4px 16px;
-  box-shadow: 0 3px 10px rgba(30, 94, 65, 0.25);
+  border-radius: 20px 20px 4px 20px;
+  box-shadow: 0 4px 12px rgba(30, 94, 65, 0.28);
   font-weight: 600;
 }
 
@@ -1074,14 +1099,14 @@ h1, h2, h3, h4, .serif-font, .letter-preview, .proposal-highlight {
 .qbot-thinking {
   display: flex;
   align-items: center;
-  padding: 10px 14px;
+  padding: 12px 16px;
 }
 
 .qbot-dot {
-  width: 8px;
-  height: 8px;
-  margin: 0 3px;
-  background: #1E5E41;
+  width: 9px;
+  height: 9px;
+  margin: 0 4px;
+  background: #2563EB;
   border-radius: 50%;
   display: inline-block;
   animation: qbotDotPulse 1.4s infinite ease-in-out both;
@@ -1098,42 +1123,42 @@ h1, h2, h3, h4, .serif-font, .letter-preview, .proposal-highlight {
 /* 하단 폼 입력 */
 .qbot-input-area {
   background: #FFFFFF;
-  border-top: 2px solid #E2DBD0;
-  padding: 12px 14px;
+  border-top: 2px solid #E2E8F0;
+  padding: 14px 16px;
 }
 
 .qbot-form {
   display: flex;
-  gap: 8px;
+  gap: 10px;
 }
 
 .qbot-input {
   flex: 1;
-  padding: 12px 14px;
-  font-size: 1.05rem;
+  padding: 14px 16px;
+  font-size: 1.12rem;
   font-family: inherit;
-  border: 2px solid #E2DBD0;
-  border-radius: 12px;
-  background: #FAF8F5;
+  border: 2px solid #CBD5E1;
+  border-radius: 14px;
+  background: #F8FAFC;
   color: #1F2937;
   outline: none;
   transition: all 0.2s;
 }
 
 .qbot-input:focus {
-  border-color: #1E5E41;
+  border-color: #2563EB;
   background: #FFFFFF;
-  box-shadow: 0 0 0 3px rgba(30, 94, 65, 0.15);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
 }
 
 .qbot-send-btn {
   background: #1E5E41;
   color: #FFFFFF;
   border: none;
-  border-radius: 12px;
-  padding: 0 16px;
-  font-size: 1rem;
-  font-weight: 700;
+  border-radius: 14px;
+  padding: 0 20px;
+  font-size: 1.1rem;
+  font-weight: 800;
   cursor: pointer;
   transition: all 0.2s;
   white-space: nowrap;
@@ -1142,6 +1167,7 @@ h1, h2, h3, h4, .serif-font, .letter-preview, .proposal-highlight {
 .qbot-send-btn:hover:not(:disabled) {
   background: #164832;
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(30, 94, 65, 0.3);
 }
 
 .qbot-send-btn:disabled {
@@ -1156,18 +1182,26 @@ h1, h2, h3, h4, .serif-font, .letter-preview, .proposal-highlight {
     padding-bottom: 50px;
   }
   .qbot-container {
-    top: 10px;
-    right: 12px;
+    top: 8px;
+    right: 10px;
   }
   .qbot-toggle-btn {
-    padding: 6px 14px;
-    font-size: 0.95rem;
+    padding: 8px 16px;
+    font-size: 1.05rem;
+  }
+  .qbot-toggle-icon {
+    width: 34px;
+    height: 34px;
+  }
+  .qbot-bono-icon {
+    width: 32px;
+    height: 32px;
   }
   .qbot-window {
-    width: calc(100vw - 24px);
+    width: calc(100vw - 20px);
     right: -4px;
-    top: 48px;
-    height: 75vh;
+    top: 52px;
+    height: 80vh;
   }
 }
 

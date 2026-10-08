@@ -193,6 +193,26 @@
       </div>
     </div>
 
+    <!-- 3단계와 4단계 사이: 편지를 이미지로 저장하기 -->
+    <div class="card" id="saveImageCard" style="background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%); border: 2.5px solid #86EFAC; text-align: center; padding: 26px 20px;">
+      <div style="max-width: 650px; margin: 0 auto;">
+        <div style="display: inline-flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: #FFFFFF; border-radius: 50%; box-shadow: 0 4px 12px rgba(22, 101, 52, 0.12); font-size: 1.8rem; margin-bottom: 10px;">
+          📸
+        </div>
+        <h3 style="font-family: 'Nanum Myeongjo', serif; font-size: 1.55rem; color: #166534; font-weight: 800; margin-bottom: 6px;">
+          우리 모둠의 편지를 이미지로 저장하기
+        </h3>
+        <p style="font-size: 1.05rem; color: #15803D; margin-bottom: 16px; line-height: 1.5;">
+          3단계에서 완성된 제안서 편지를 <strong>그림 파일(PNG)</strong>로 다운로드 폴더에 안전하게 보관할 수 있어요!
+        </p>
+        <button type="button" id="saveLetterImageBtn" class="btn-primary" style="display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 34px; font-size: 1.25rem; font-weight: 800; background: linear-gradient(135deg, #16A34A 0%, #15803D 100%); border: 2px solid #86EFAC; border-radius: 14px; box-shadow: 0 6px 18px rgba(22, 163, 74, 0.3); cursor: pointer; transition: all 0.25s;">
+          <span style="font-size: 1.4rem;">📥</span>
+          <span>편지를 이미지로 저장하기</span>
+        </button>
+        <div id="saveImageStatus" style="margin-top: 12px; font-size: 1rem; color: #166534; font-weight: 700; min-height: 24px;"></div>
+      </div>
+    </div>
+
     <!-- 4단계: 스스로 점검하기 & 제출 -->
     <div class="card" id="step4Card">
       <div class="card-header">
@@ -246,6 +266,9 @@
 
   <!-- 토스트 컨테이너 -->
   <div id="toastContainer" class="toast-container"></div>
+
+  <!-- HTML2Canvas 라이브러리 (편지 이미지 저장용) -->
+  <script src="./html2canvas.min.js"></script>
 
   <script type="module">
     import { subscribeResponses, addProposal, speakText, stopSpeaking } from './app.js';
@@ -547,6 +570,71 @@
       updatePreview();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    // ==============================================================
+    // 📸 3단계와 4단계 사이: 편지를 이미지로 저장하기 (다운로드 폴더 저장)
+    // ==============================================================
+    const saveLetterImageBtn = document.getElementById('saveLetterImageBtn');
+    const saveImageStatus = document.getElementById('saveImageStatus');
+    const letterPaper = document.getElementById('letterPaper');
+
+    if (saveLetterImageBtn && letterPaper) {
+      saveLetterImageBtn.addEventListener('click', async () => {
+        if (typeof window.html2canvas !== 'function') {
+          showToast('⚠️ 이미지 변환 도구를 불러오는 중입니다. 잠시 후 다시 시도해 주세요.');
+          return;
+        }
+
+        const originalBtnHtml = saveLetterImageBtn.innerHTML;
+        try {
+          saveLetterImageBtn.disabled = true;
+          saveLetterImageBtn.innerHTML = '<span>⏳ 이미지 생성 중...</span>';
+          if (saveImageStatus) {
+            saveImageStatus.style.display = 'block';
+            saveImageStatus.textContent = '📸 편지를 고화질 이미지 파일로 변환하고 있어요...';
+          }
+
+          // html2canvas로 편지지 영역 고화질 캡처 (scale 2 적용)
+          const canvas = await window.html2canvas(letterPaper, {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: '#FFFDF9',
+            logging: false,
+          });
+
+          // 파일명 생성: 제안하는_글_1모둠_이름_YYYYMMDD.png
+          const now = new Date();
+          const dateStr = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`;
+          const author = (authorNameInput && authorNameInput.value.trim()) || '친구들';
+          const safeAuthor = author.replace(/[\/\\:*?"<>|]/g, '');
+          const fileName = `제안하는_글_${currentTeam}_${safeAuthor}_${dateStr}.png`;
+
+          // 브라우저 기본 '다운로드 폴더'로 파일 저장 트리거
+          const dataUrl = canvas.toDataURL('image/png');
+          const link = document.createElement('a');
+          link.download = fileName;
+          link.href = dataUrl;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+
+          if (saveImageStatus) {
+            saveImageStatus.innerHTML = `✅ <strong>다운로드 폴더</strong>에 저장되었어요! (<span style="color:#166534;">${fileName}</span>)`;
+          }
+          showToast('🎉 편지가 다운로드 폴더에 이미지(PNG)로 저장되었습니다!');
+        } catch (err) {
+          console.error('Image capture error:', err);
+          if (saveImageStatus) {
+            saveImageStatus.textContent = '❌ 이미지를 저장하는 중 문제가 발생했습니다.';
+          }
+          showToast('이미지 저장 중 오류가 발생했습니다.');
+        } finally {
+          saveLetterImageBtn.disabled = false;
+          saveLetterImageBtn.innerHTML = originalBtnHtml;
+        }
+      });
+    }
   </script>
   <!-- 질문봇 (AI Chatbot) -->
   <script src="./chatbot.js"></script>

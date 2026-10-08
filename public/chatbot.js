@@ -28,8 +28,10 @@
     botWrapper.innerHTML = `
       <!-- 플로팅 토글 버튼 -->
       <button type="button" id="qbotToggleBtn" class="qbot-toggle-btn" aria-label="질문봇 열기">
-        <span class="qbot-toggle-icon">🤖</span>
-        <span class="qbot-toggle-label">질문봇</span>
+        <span class="qbot-toggle-icon">
+          <img src="/bonobono.svg" alt="보노보노" class="qbot-bono-icon" />
+        </span>
+        <span class="qbot-toggle-label">보노보노 질문봇</span>
         <span class="qbot-unread-dot" id="qbotUnreadDot"></span>
       </button>
 
@@ -38,10 +40,12 @@
         <!-- 상단 헤더 -->
         <div class="qbot-header">
           <div class="qbot-header-info">
-            <div class="qbot-avatar">🤖</div>
+            <div class="qbot-avatar">
+              <img src="/bonobono.svg" alt="보노보노" class="qbot-bono-header-img" />
+            </div>
             <div>
-              <div class="qbot-title">질문봇</div>
-              <div class="qbot-subtitle">초등 4학년 국어 글쓰기 도우미</div>
+              <div class="qbot-title">보노보노 질문봇</div>
+              <div class="qbot-subtitle">초등 4학년 국어 글쓰기 도우미 🐚</div>
             </div>
           </div>
           <div class="qbot-header-actions">
@@ -62,10 +66,12 @@
         <!-- 메시지 리스트 영역 -->
         <div class="qbot-messages" id="qbotMessages">
           <div class="qbot-msg-row bot">
-            <div class="qbot-msg-avatar">🤖</div>
+            <div class="qbot-msg-avatar">
+              <img src="/bonobono.svg" alt="보노보노" class="qbot-bono-msg-img" />
+            </div>
             <div class="qbot-bubble bot">
-              반가워요! 저는 국어 수업을 도와주는 <strong>질문봇</strong>이에요. 🌸<br><br>
-              학교 속 불편한 점을 찾거나, 멋진 제안과 까닭을 쓸 때 궁금한 점이 있다면 무엇이든 편하게 물어보세요!
+              반가워요! 저는 국어 수업을 도와주는 <strong>보노보노 질문봇</strong>이에요. 🐚💙<br><br>
+              학교 속 불편한 점을 찾거나, 멋진 제안과 알맞은 까닭을 쓸 때 궁금한 점이 있다면 무엇이든 편하게 물어보세요!
             </div>
           </div>
         </div>
@@ -231,7 +237,9 @@
 
       if (role === 'bot') {
         row.innerHTML = `
-          <div class="qbot-msg-avatar">🤖</div>
+          <div class="qbot-msg-avatar">
+            <img src="/bonobono.svg" alt="보노보노" class="qbot-bono-msg-img" />
+          </div>
           <div class="qbot-bubble bot">${formatted}</div>
         `;
       } else {
@@ -250,12 +258,14 @@
       const row = document.createElement('div');
       row.className = 'qbot-msg-row bot qbot-loading-row';
       row.innerHTML = `
-        <div class="qbot-msg-avatar">🤖</div>
+        <div class="qbot-msg-avatar">
+          <img src="/bonobono.svg" alt="보노보노" class="qbot-bono-msg-img" />
+        </div>
         <div class="qbot-bubble bot qbot-thinking">
           <span class="qbot-dot"></span>
           <span class="qbot-dot"></span>
           <span class="qbot-dot"></span>
-          <span style="margin-left: 8px; font-size: 0.95rem; color: #4A5568;">질문봇이 생각 중이에요...</span>
+          <span style="margin-left: 8px; font-size: 1rem; color: #374151; font-weight: 600;">보노보노가 생각 중이에요... 🐚</span>
         </div>
       `;
       qbotMessages.appendChild(row);
